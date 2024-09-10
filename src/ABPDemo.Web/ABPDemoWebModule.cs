@@ -184,6 +184,31 @@ public class ABPDemoWebModule : AbpModule
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ABPDemo.Application.Contracts.xml"));
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "ABPDemo.HttpApi.xml"));
                 options.SchemaFilter<EnumSchemaFilter>();
+
+                #region JWT Token配置项
+                // 添加安全定义
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "请输入token，格式为Bearer xxxxxxx（注意中间有空格）",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+
+                // 添加安全要求
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                 {
+                        {
+                            new OpenApiSecurityScheme{
+                                Reference = new OpenApiReference {
+                                            Type = ReferenceType.SecurityScheme,
+                                            Id = "Bearer"}
+                           },Array.Empty<string>()
+                        }
+                 });
+                #endregion
             }
         );
     }

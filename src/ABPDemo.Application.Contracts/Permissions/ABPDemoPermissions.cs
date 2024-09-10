@@ -6,4 +6,9 @@ public static class ABPDemoPermissions
 
     //Add your own permission names. Example:
     //public const string MyPermission1 = GroupName + ".MyPermission1";
+
+    /// <summary>
+    /// 系统设置
+    /// </summary>
+    public const string SystemSetting = GroupName + ".SystemSetting";
 }

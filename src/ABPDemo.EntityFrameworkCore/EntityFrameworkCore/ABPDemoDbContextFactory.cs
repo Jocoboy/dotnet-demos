@@ -17,8 +17,8 @@ public class ABPDemoDbContextFactory : IDesignTimeDbContextFactory<ABPDemoDbCont
         var configuration = BuildConfiguration();
 
         var builder = new DbContextOptionsBuilder<ABPDemoDbContext>()
-            .UseNpgsql(configuration.GetConnectionString("Default"))
-            .EnableSensitiveDataLogging();
+            .UseNpgsql(configuration.GetConnectionString("Default"));
+            //.EnableSensitiveDataLogging();
 
         return new ABPDemoDbContext(builder.Options);
     }

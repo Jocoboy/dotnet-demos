@@ -11,5 +11,6 @@ namespace ABPDemo.AdvisoryLock
         // Add your application layer locks.
         // For example: 
         // public const long ToDo = 10001;
+        public const long StudentUpdate = 10001;
     }
 }

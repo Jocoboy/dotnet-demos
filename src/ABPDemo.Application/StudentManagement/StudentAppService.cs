@@ -39,6 +39,8 @@ namespace ABPDemo.StudentManagement
         {
             var student = await _studentRepository.GetAsync(input.Id, false, cancellationToken);
 
+            await _advisoryLock.LockAsync(Locks.StudentUpdate, LockMode.Exclusive, true, cancellationToken);
+
             student.Name = input.Name;
             student.StudentLevel = input.StudentLevel;
 

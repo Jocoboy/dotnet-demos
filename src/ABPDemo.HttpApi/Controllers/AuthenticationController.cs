@@ -6,17 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
 
 namespace ABPDemo.Controllers
 {
+    [RemoteService]
     [Route("api/auth")]
     public class AuthenticationController : ABPDemoController, IAuthenticationAppService
     {
-        private readonly IAuthenticationAppService _service;
+        private readonly IAuthenticationAppService _authenticationAppService;
 
         public AuthenticationController(IAuthenticationAppService service)
         {
-            _service = service;
+            _authenticationAppService = service;
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace ABPDemo.Controllers
         [HttpPost("login")]
         public async Task LoginAsync(LoginInput input, CancellationToken cancellationToken)
         {
-            await _service.LoginAsync(input, cancellationToken);
+            await _authenticationAppService.LoginAsync(input, cancellationToken);
         }
 
         /// <summary>
@@ -34,7 +36,7 @@ namespace ABPDemo.Controllers
         [HttpPost("logout")]
         public async Task LoginOutAsync(CancellationToken cancellationToken)
         {
-            await _service.LoginOutAsync(cancellationToken);
+            await _authenticationAppService.LoginOutAsync(cancellationToken);
         }
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace ABPDemo.Controllers
         [HttpPost("refresh-token")]
         public async Task RefreshTokenAsync(CancellationToken cancellationToken)
         {
-            await _service.RefreshTokenAsync(cancellationToken);
+            await _authenticationAppService.RefreshTokenAsync(cancellationToken);
         }
     }
 }

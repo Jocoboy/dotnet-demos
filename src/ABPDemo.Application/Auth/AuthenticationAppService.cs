@@ -1,4 +1,5 @@
 ﻿using ABPDemo.Enums;
+using ABPDemo.UserManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -31,7 +32,8 @@ namespace ABPDemo.Auth
         private readonly AuthOptions _authOptions;
         private readonly HttpContext _context;
 
-        public AuthenticationAppService(SignInManager<IdentityUser> signInManager,
+        public AuthenticationAppService(
+            SignInManager<IdentityUser> signInManager,
             IdentitySecurityLogManager identitySecurityLogManager,
             UserManager<IdentityUser> userManager,
             IOptions<AuthOptions> options,
@@ -89,11 +91,7 @@ namespace ABPDemo.Auth
         private async Task<string> GenerateUserTokenAsync(IdentityUser user, bool rememberMe)
         {
             #region 额外角色信息写入token
-            /*
-             * user.GetProperty<UserAccountType>("Type")
-             * user.SetProperty("Type", accountType) 
-             */
-            var accountType = user.GetProperty<UserAccountType>("Type");
+            var accountType = user.GetAccountType();
             var accountTypeValue = (int)accountType;
             var roles = await _userManager.GetRolesAsync(user);
             roles.Add(accountType.ToString());

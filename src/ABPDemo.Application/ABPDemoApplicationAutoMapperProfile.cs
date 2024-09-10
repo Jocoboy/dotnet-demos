@@ -16,6 +16,10 @@ public class ABPDemoApplicationAutoMapperProfile : Profile
          * into multiple profile classes for a better organization. */
 
         CreateMap<IdentityUser, AccountDto>();
-
+        CreateMap<Course, CourseDto>();
+        CreateMap<StudentScore, StudentScoreDto>();
+        CreateMap<Student, StudentDto>()
+            .ForMember(d => d.Courses, p => p.MapFrom(s => s.StudentCourses.Select(x => x.Course)));
+        CreateMap<Student, StudentSimpleDto>();
     }
 }

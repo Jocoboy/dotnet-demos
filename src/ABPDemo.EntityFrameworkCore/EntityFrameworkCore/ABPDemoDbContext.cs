@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ABPDemo.StudentManagement;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
@@ -42,6 +43,15 @@ public class ABPDemoDbContext :
 
     #endregion
 
+    #region Custom modules
+
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<Student> Students { get; set; }
+    public DbSet<StudentCourse> StudentCourses { get; set; }
+    public DbSet<StudentScore> StudentScores { get; set; }
+
+    #endregion
+
     public ABPDemoDbContext(DbContextOptions<ABPDemoDbContext> options)
         : base(options)
     {
@@ -60,11 +70,6 @@ public class ABPDemoDbContext :
 
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(ABPDemoConsts.DbTablePrefix + "YourEntities", ABPDemoConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.ConfigureStudentManagement();
     }
 }

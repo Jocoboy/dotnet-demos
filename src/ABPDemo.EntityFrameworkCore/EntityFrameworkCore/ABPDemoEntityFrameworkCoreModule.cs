@@ -1,7 +1,4 @@
-﻿using ABPDemo.EntityFrameworkCore.PropertySetters;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Volo.Abp.Auditing;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.PostgreSql;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -41,6 +38,5 @@ public class ABPDemoEntityFrameworkCoreModule : AbpModule
             options.UseNpgsql();
         });
 
-        context.Services.Replace(new ServiceDescriptor(typeof(AuditPropertySetter), typeof(OverrideAuditPropertySetter), ServiceLifetime.Transient));
     }
 }

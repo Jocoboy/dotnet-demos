@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ABPDemo.System.Dtos;
 using Volo.Abp.Application.Services;
 
-namespace ABPDemo.Auth
+namespace ABPDemo.System
 {
     public interface IAuthenticationAppService : IApplicationService
     {

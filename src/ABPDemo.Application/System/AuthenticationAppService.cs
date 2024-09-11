@@ -1,4 +1,5 @@
 ﻿using ABPDemo.Enums;
+using ABPDemo.System.Dtos;
 using ABPDemo.UserManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +23,7 @@ using Volo.Abp.Uow;
 using Volo.Abp.Users;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
-namespace ABPDemo.Auth
+namespace ABPDemo.System
 {
     public class AuthenticationAppService : ABPDemoAppService, IAuthenticationAppService
     {

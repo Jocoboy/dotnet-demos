@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ABPDemo.Auth
+namespace ABPDemo.System.Dtos
 {
     public class LoginInput
     {

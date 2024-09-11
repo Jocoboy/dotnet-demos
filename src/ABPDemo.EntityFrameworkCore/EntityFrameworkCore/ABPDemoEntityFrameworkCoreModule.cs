@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ABPDemo.StudentManagement;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.PostgreSql;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -29,6 +31,19 @@ public class ABPDemoEntityFrameworkCoreModule : AbpModule
                 /* Remove "includeAllEntities: true" to create
                  * default repositories only for aggregate roots */
             options.AddDefaultRepositories(includeAllEntities: true);
+
+            options.Entity<Student>(opt =>
+            {
+                opt.DefaultWithDetailsFunc = q => q.Include(p => p.StudentScores)
+                .Include(p => p.StudentCourses)
+                .ThenInclude(p => p.Course);
+            });
+
+            options.Entity<StudentCourse>(opt =>
+            {
+                opt.DefaultWithDetailsFunc = q => q.Include(p => p.Student)
+                .Include(p => p.Course);
+            });
         });
 
         Configure<AbpDbContextOptions>(options =>

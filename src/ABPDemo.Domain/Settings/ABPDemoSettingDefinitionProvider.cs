@@ -8,5 +8,7 @@ public class ABPDemoSettingDefinitionProvider : SettingDefinitionProvider
     {
         //Define your own settings here. Example:
         //context.Add(new SettingDefinition(ABPDemoSettings.MySetting1));
+
+        context.Add(new SettingDefinition(ABPDemoSettings.ResetPassword, "111111"));
     }
 }

@@ -2,6 +2,8 @@ INSERT INTO public."AbpPermissionGroups" ("Id", "Name", "DisplayName", "ExtraPro
 
 INSERT INTO public."AbpPermissions" ("Id", "GroupName", "Name", "ParentName", "DisplayName", "IsEnabled", "MultiTenancySide", "Providers", "StateCheckers", "ExtraProperties") VALUES('3a14ef14-8561-1b60-cd40-d035a04e2ca5'::uuid, 'ABPDemo', 'ABPDemo.SystemSetting', NULL, 'L:Default,系统设置（账号管理）', true, 3, NULL, NULL, '{}');
 
+INSERT INTO public."AbpSettingDefinitions" ("Id", "Name", "DisplayName", "Description", "DefaultValue", "IsVisibleToClients", "Providers", "IsInherited", "IsEncrypted", "ExtraProperties") VALUES('3a14f304-5f55-5b25-d79f-afcc1f9f1265'::uuid, 'ABPDemo.ResetPassword', 'F:ABPDemo.ResetPassword', NULL, '111111', false, NULL, true, false, '{}');
+
 --↑ ABP auto-generated. Delete it if you build and run your project first.↑--
 
 INSERT INTO public."AbpPermissionGrants" ("Id", "TenantId", "Name", "ProviderName", "ProviderKey") VALUES('3a14ef19-3f51-3944-82da-7e061e4b6301'::uuid, NULL, 'ABPDemo.SystemSetting', 'U', '3a14ef19-3a3a-ca37-f749-240487c2fa3e');

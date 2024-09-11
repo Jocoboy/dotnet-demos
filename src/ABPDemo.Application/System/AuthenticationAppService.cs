@@ -95,6 +95,7 @@ namespace ABPDemo.System
             var accountType = user.GetAccountType();
             var accountTypeValue = (int)accountType;
             var roles = await _userManager.GetRolesAsync(user);
+            roles.Clear(); // 清空ABP自己写入的Role = "admin"
             roles.Add(accountType.ToString());
             #endregion
 

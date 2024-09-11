@@ -20,7 +20,7 @@ using IdentityUser = Volo.Abp.Identity.IdentityUser;
 
 namespace ABPDemo.UserManagement
 {
-    //[Authorize(ABPDemoPermissions.SystemSetting)]
+    [Authorize(ABPDemoPermissions.SystemSetting)]
     public class UserManagementAppService : ABPDemoAppService, IUserManagementAppService
     {
         private readonly IExpectedExceptionCollection _expectedExceptions;

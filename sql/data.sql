@@ -6,6 +6,8 @@ INSERT INTO public."AbpSettingDefinitions" ("Id", "Name", "DisplayName", "Descri
 
 --¡ü ABP auto-generated. Delete it if you build and run your project first.¡ü--
 
+INSERT INTO public."AbpSettings" ("Id", "Name", "Value", "ProviderName", "ProviderKey") VALUES('3a14f6cf-609c-cca2-064e-894fd05f06ae'::uuid, 'ABPDemo.ResetPassword', '123456', 'G', NULL);
+
 INSERT INTO public."AbpPermissionGrants" ("Id", "TenantId", "Name", "ProviderName", "ProviderKey") VALUES('3a14ef19-3f51-3944-82da-7e061e4b6301'::uuid, NULL, 'ABPDemo.SystemSetting', 'U', '3a14ef19-3a3a-ca37-f749-240487c2fa3e');
 
 INSERT INTO public."AbpUsers" ("Id", "TenantId", "UserName", "NormalizedUserName", "Name", "Surname", "Email", "NormalizedEmail", "EmailConfirmed", "PasswordHash", "SecurityStamp", "IsExternal", "PhoneNumber", "PhoneNumberConfirmed", "IsActive", "TwoFactorEnabled", "LockoutEnd", "LockoutEnabled", "AccessFailedCount", "ShouldChangePasswordOnNextLogin", "EntityVersion", "LastPasswordChangeTime", "ExtraProperties", "ConcurrencyStamp", "CreationTime", "CreatorId", "LastModificationTime", "LastModifierId", "IsDeleted", "DeleterId", "DeletionTime", "Type") VALUES('3a14ef19-3a3a-ca37-f749-240487c2fa3e'::uuid, NULL, 'Jocoboy', 'JOCOBOY', 'jocoboy', NULL, '', '', false, 'AQAAAAIAAYagAAAAEL77+4oV57pGk/WTgTHy7d9VfzPVqMuwyShpyv694vpXLVN1+Y8SY1g2kSeVY9u4sA==', 'RZBXIFC3WM54IN7V3T7G463J624CLFJE', false, NULL, false, true, false, NULL, true, 0, false, 1, '2024-09-11 01:12:44.968', '{}', 'f6cf944f12a94c2c8c27cf88dc7ef48c', '2024-09-11 01:12:45.508', NULL, '2024-09-11 01:20:08.345', NULL, false, NULL, NULL, 0);

@@ -12,5 +12,7 @@ namespace ABPDemo.SystemManagement
     public interface  ISystemManagementAppService
     {
         Task<PagedResultDto<OperationLogDto>> GetOperateLogListAsync(OperationLogFliterInput input, CancellationToken cancellationToken);
+
+        Task UpdateSystemSettingsAsync(SystemSettingInput input);
     }
 }

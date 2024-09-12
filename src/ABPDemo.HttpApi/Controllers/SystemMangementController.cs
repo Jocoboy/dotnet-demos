@@ -31,5 +31,14 @@ namespace ABPDemo.Controllers
         {
             return _systemManagementAppService.GetOperateLogListAsync(input, cancellationToken);
         }
+
+        /// <summary>
+        /// 修改系统配置项
+        /// </summary>
+        [HttpPut("settings")]
+        public async Task UpdateSystemSettingsAsync(SystemSettingInput input)
+        {
+            await  _systemManagementAppService.UpdateSystemSettingsAsync(input);
+        }
     }
 }

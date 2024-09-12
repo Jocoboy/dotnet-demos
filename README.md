@@ -1,3 +1,4 @@
+![dotnet workflow](https://github.com/Jocoboy/dotnet-demos/actions/workflows/dotnet.yml/badge.svg)
 ## Introduction
 
 Demos using popular frameworks or architectures, based on dotnet.

@@ -12,5 +12,15 @@ namespace ABPDemo.Permissions
         /// 管理员
         /// </summary>
         public const string Admin = "Admin";
+
+        /// <summary>
+        /// 教师
+        /// </summary>
+        public const string Teacher = "Teacher";
+
+        /// <summary>
+        /// 学生
+        /// </summary>
+        public const string Student = "Student";
     }
 }

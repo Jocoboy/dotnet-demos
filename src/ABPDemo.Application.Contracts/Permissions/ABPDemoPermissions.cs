@@ -1,4 +1,6 @@
-﻿namespace ABPDemo.Permissions;
+﻿using System.Collections.Generic;
+
+namespace ABPDemo.Permissions;
 
 public static class ABPDemoPermissions
 {
@@ -11,4 +13,9 @@ public static class ABPDemoPermissions
     /// 系统设置
     /// </summary>
     public const string SystemSetting = GroupName + ".SystemSetting";
+
+    public static List<string> GetPermissionCodes()
+    {
+        return [SystemSetting];
+    }
 }

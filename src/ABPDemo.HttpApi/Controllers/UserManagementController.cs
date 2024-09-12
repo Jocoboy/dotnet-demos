@@ -1,8 +1,10 @@
 ﻿using ABPDemo.UserManagement;
 using ABPDemo.UserManagement.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -18,6 +20,15 @@ namespace ABPDemo.Controllers
        public UserManagementController(IUserManagementAppService userManagementAppService)
         {
             _userManagementAppService = userManagementAppService;
+        }
+
+        /// <summary>
+        /// 获取权限代码合集
+        /// </summary>
+        [HttpGet("permission-codes")]
+        public List<string> GetPermissionCodes()
+        {
+            return _userManagementAppService.GetPermissionCodes();
         }
 
         /// <summary>
@@ -57,6 +68,15 @@ namespace ABPDemo.Controllers
         }
 
         /// <summary>
+        /// 启用/禁用用户账号
+        /// </summary>
+        [HttpPut("users/{userId}/activity")]
+        public async Task UpdateAccountActivityAsync([Required] Guid userId, [Required] bool isActive, CancellationToken cancellationToken)
+        {
+            await _userManagementAppService.UpdateAccountActivityAsync(userId, isActive, cancellationToken);
+        }
+
+        /// <summary>
         /// 删除用户账号
         /// </summary>
         [HttpDelete("users/{userId}")]
@@ -64,6 +84,5 @@ namespace ABPDemo.Controllers
         {
             await _userManagementAppService.DeleteAccountAsync(userId, cancellationToken);
         }
-
     }
 }

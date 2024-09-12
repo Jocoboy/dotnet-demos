@@ -11,6 +11,8 @@ namespace ABPDemo.UserManagement
 {
     public interface IUserManagementAppService : IApplicationService
     {
+        List<string> GetPermissionCodes();
+
         Task<Guid> CreateAccountAsync(AccountCreateInput input, CancellationToken cancellationToken);
 
         Task<List<AccountDto>> GetAccountListAsync(CancellationToken cancellationToken);
@@ -18,6 +20,8 @@ namespace ABPDemo.UserManagement
         Task UpdateAccountAsync(Guid userId, AccountUpdateInput input, CancellationToken cancellationToken);
 
         Task ChangeAccountPasswordAsync(Guid userId, string password, CancellationToken cancellationToken);
+
+        Task UpdateAccountActivityAsync(Guid userId, bool isActive, CancellationToken cancellationToken);
 
         Task DeleteAccountAsync(Guid userId, CancellationToken cancellationToken);
     }

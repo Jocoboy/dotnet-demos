@@ -38,13 +38,16 @@ namespace ABPDemo.UserManagement
             _forbiddenUserCache = forbiddenUserCache;
         }
 
+        [AllowAnonymous]
+        public List<string> GetPermissionCodes() => ABPDemoPermissions.GetPermissionCodes();
+
         public async Task<Guid> CreateAccountAsync(AccountCreateInput input, CancellationToken cancellationToken)
         {
             _expectedExceptions.Add(new ExpectedExceptionDescription() { Type = ExpectedExceptionType.UniqueViolation, Key = "UX_AbpUsers_UserName", ErrorCode = ABPDemoDomainErrorCodes.UserNameAlreadyExists, ErrorMessage = "用户名已存在!" });
 
             var user = new IdentityUser(GuidGenerator.Create(), input.UserName, string.Empty);
             user.Name = input.Name;
-            user.SetAccountType(UserAccountType.Admin);
+            user.SetAccountType(input.UserAccountType);
 
             (await _userManager.CreateAsync(user, input.Password)).CheckErrors();
 
@@ -73,10 +76,7 @@ namespace ABPDemo.UserManagement
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
 
-            if (user == null || user.GetAccountType() != UserAccountType.Admin)
-            {
-                throw new UserFriendlyException("操作用户不存在！", ABPDemoDomainErrorCodes.UserNotExist);
-            }
+            if (user == null) throw new UserFriendlyException("操作用户不存在！", ABPDemoDomainErrorCodes.UserNotExist);
 
             user.Name = input.Name;
 
@@ -101,15 +101,29 @@ namespace ABPDemo.UserManagement
         {
             var user = await _identityUserRepository.GetAsync(userId, false, cancellationToken);
 
-            if (user.GetAccountType() != UserAccountType.Admin)
-            {
-                throw new ArgumentException("指定的用户不存在!", nameof(userId));
-            }
-
             (await _userManager.RemovePasswordAsync(user)).CheckErrors();
             (await _userManager.AddPasswordAsync(user, password)).CheckErrors();
             (await _userManager.ResetAccessFailedCountAsync(user)).CheckErrors();
             (await _userManager.SetLockoutEndDateAsync(user, null)).CheckErrors();
+        }
+
+        public async Task UpdateAccountActivityAsync(Guid userId, bool isActive, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null) throw new UserFriendlyException("操作用户不存在！", ABPDemoDomainErrorCodes.UserNotExist);
+
+            if (user.IsActive != isActive)
+            {
+                user.SetIsActive(isActive);
+
+                (await _userManager.UpdateAsync(user)).CheckErrors();
+            }
+
+            if (isActive)
+                await _forbiddenUserCache.CancelForbiddenAsync(userId, cancellationToken);
+            else
+                await _forbiddenUserCache.ForbiddenAsync(userId, cancellationToken);
         }
 
         public async Task DeleteAccountAsync(Guid userId, CancellationToken cancellationToken)
@@ -121,10 +135,7 @@ namespace ABPDemo.UserManagement
 
             var user = await _userManager.FindByIdAsync(userId.ToString());
 
-            if (user == null || user.GetAccountType() != UserAccountType.Admin)
-            {
-                return;
-            }
+            if (user == null) return;
 
             (await _userManager.DeleteAsync(user)).CheckErrors();
 

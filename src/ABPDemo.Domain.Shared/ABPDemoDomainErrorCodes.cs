@@ -9,4 +9,6 @@ public static class ABPDemoDomainErrorCodes
     public const string CanNotDeleteCurrentUser = "CanNotDeleteCurrentUser";
 
     public const string UserNotExist = "UserNotExist";
+
+    public const string IncorrectPassword = "IncorrectPassword";
 }

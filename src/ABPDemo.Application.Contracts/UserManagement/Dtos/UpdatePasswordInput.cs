@@ -1,6 +1,4 @@
-﻿using ABPDemo.Attributes;
-using ABPDemo.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,17 +7,18 @@ using System.Threading.Tasks;
 
 namespace ABPDemo.UserManagement.Dtos
 {
-    public class AccountCreateInput : AccountSimpleDto
+    public class UpdatePasswordInput
     {
         /// <summary>
-        /// 用户密码
+        /// 旧密码
         /// </summary>
         [Required, MinLength(6), MaxLength(15)]
-        public string Password { get; set; }
+        public string OldPassword { get; set; }
 
         /// <summary>
-        /// 用户类型
+        /// 新密码
         /// </summary>
-        public UserAccountType UserAccountType { get; set; }
+        [Required, MinLength(6), MaxLength(15)]
+        public string NewPassword { get; set; }
     }
 }

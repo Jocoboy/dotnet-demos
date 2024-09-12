@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Principal;
 
-namespace ABPDemo.Web.Extensions
+namespace ABPDemo.Web.Middlewares
 {
     /// <summary>
-    /// 用户Token校验扩展
+    /// 用户Token校验中间件
     /// </summary>
-    public static class ApplicationBuilderTokenVerifyMiddlewareExtension
+    public static class UserTokenVerifyMiddleware
     {
-        public static IApplicationBuilder UseTokenVerifyMiddleware(this IApplicationBuilder app, string schema = JwtBearerDefaults.AuthenticationScheme)
+        public static IApplicationBuilder UseUserTokenVerifyMiddleware(this IApplicationBuilder app, string schema = JwtBearerDefaults.AuthenticationScheme)
         {
             return app.Use(async (ctx, next) =>
             {

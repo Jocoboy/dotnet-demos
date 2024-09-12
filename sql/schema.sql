@@ -272,7 +272,7 @@ CREATE INDEX "IX_AbpUsers_UserName" ON public."AbpUsers" USING btree ("UserName"
 
 -- Column comments
 
-COMMENT ON COLUMN public."AbpUsers"."Type" IS '用户类型（0 Admin)';
+COMMENT ON COLUMN public."AbpUsers"."Type" IS '账号类型';
 
 
 -- public."AbpOrganizationUnits" definition
@@ -432,6 +432,34 @@ CREATE INDEX "IX_AbpOrganizationUnitRoles_RoleId_OrganizationUnitId" ON public."
 --↑ ABP Part End ↑--
 
 --↓ Business Part ↓--
+
+-- public."OperationLogs" definition
+
+-- Drop table
+
+-- DROP TABLE public."OperationLogs";
+
+CREATE TABLE public."OperationLogs" (
+	"Id" uuid NOT NULL, -- 主键
+	"AccountName" varchar(50) NULL, -- 操作账号显示名称
+	"Account" varchar(50) NULL, -- 操作账号用户名
+	"AccountType" int4 NOT NULL, -- 账号类型
+	"Operation" int4 NOT NULL, -- 操作行为
+	"Data" jsonb NULL, -- 操作数据（摘要）
+	"CreationTime" timestamptz NOT NULL, -- 创建时间
+	CONSTRAINT "PK_OperationLogs" PRIMARY KEY ("Id")
+);
+COMMENT ON TABLE public."OperationLogs" IS '操作日志表';
+
+-- Column comments
+
+COMMENT ON COLUMN public."OperationLogs"."Id" IS '主键';
+COMMENT ON COLUMN public."OperationLogs"."AccountName" IS '操作账号显示名称';
+COMMENT ON COLUMN public."OperationLogs"."Account" IS '操作账号用户名';
+COMMENT ON COLUMN public."OperationLogs"."AccountType" IS '账号类型';
+COMMENT ON COLUMN public."OperationLogs"."Operation" IS '操作行为';
+COMMENT ON COLUMN public."OperationLogs"."Data" IS '操作数据（摘要）';
+COMMENT ON COLUMN public."OperationLogs"."CreationTime" IS '创建时间';
 
 -- public."Courses" definition
 

@@ -29,7 +29,7 @@ namespace ABPDemo.EntityFrameworkCore.Repositorys
 
         public async Task<List<Student>> GetStudentListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken)
         {
-            var dbSet = await GetQueryableAsync();
+            var dbSet = await GetDbSetAsync();
             
             var result = await dbSet.Include(x => x.StudentScores)
                                                 .Include(x => x.StudentCourses)

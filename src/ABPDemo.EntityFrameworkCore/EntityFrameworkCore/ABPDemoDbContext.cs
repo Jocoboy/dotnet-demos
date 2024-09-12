@@ -1,4 +1,5 @@
 ﻿using ABPDemo.StudentManagement;
+using ABPDemo.SystemManagement;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
@@ -45,6 +46,7 @@ public class ABPDemoDbContext :
 
     #region Custom modules
 
+    public DbSet<OperationLog> OperationLogs { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<Student> Students { get; set; }
     public DbSet<StudentCourse> StudentCourses { get; set; }
@@ -70,6 +72,7 @@ public class ABPDemoDbContext :
 
         /* Configure your own tables/entities inside here */
 
+        builder.ConfigureSystemManagement();
         builder.ConfigureStudentManagement();
     }
 }

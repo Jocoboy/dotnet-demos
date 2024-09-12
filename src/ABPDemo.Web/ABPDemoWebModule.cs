@@ -1,10 +1,9 @@
 using ABPDemo.EntityFrameworkCore;
-using ABPDemo.Web.Extensions;
 using ABPDemo.Web.Filters;
 using ABPDemo.Web.Filters.StringTrim;
 using ABPDemo.Web.Menus;
+using ABPDemo.Web.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -230,7 +229,7 @@ public class ABPDemoWebModule : AbpModule
         app.UseRouting();
         app.UseAuthentication();
         app.UseJwtTokenMiddleware();
-        app.UseTokenVerifyMiddleware();
+        app.UseUserTokenVerifyMiddleware();
 
         app.UseAbpExceptionHandling();
         app.UseAuthorization();

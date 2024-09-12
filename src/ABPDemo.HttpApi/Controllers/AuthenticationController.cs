@@ -1,5 +1,5 @@
-﻿using ABPDemo.System;
-using ABPDemo.System.Dtos;
+﻿using ABPDemo.Authentication;
+using ABPDemo.Authentication.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,9 +26,9 @@ namespace ABPDemo.Controllers
         /// 登录
         /// </summary>
         [HttpPost("login")]
-        public async Task LoginAsync(LoginInput input, CancellationToken cancellationToken)
+        public async Task<string> LoginAsync(LoginInput input, CancellationToken cancellationToken)
         {
-            await _authenticationAppService.LoginAsync(input, cancellationToken);
+           return await _authenticationAppService.LoginAsync(input, cancellationToken);
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace ABPDemo.Controllers
         /// 刷新Token
         /// </summary>z
         [HttpPost("refresh-token")]
-        public async Task RefreshTokenAsync(CancellationToken cancellationToken)
+        public async Task<string> RefreshTokenAsync(CancellationToken cancellationToken)
         {
-            await _authenticationAppService.RefreshTokenAsync(cancellationToken);
+            return await _authenticationAppService.RefreshTokenAsync(cancellationToken);
         }
     }
 }

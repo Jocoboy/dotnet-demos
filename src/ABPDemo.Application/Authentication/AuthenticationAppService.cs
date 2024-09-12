@@ -1,5 +1,7 @@
-﻿using ABPDemo.Enums;
-using ABPDemo.System.Dtos;
+﻿using ABPDemo.Authentication.Dtos;
+using ABPDemo.Enums;
+using ABPDemo.SystemManagement.Dtos;
+using ABPDemo.SystemManagement;
 using ABPDemo.UserManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,8 +24,10 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.Uow;
 using Volo.Abp.Users;
 using IdentityUser = Volo.Abp.Identity.IdentityUser;
+using Volo.Abp.Domain.Repositories;
+using ABPDemo.Extensions;
 
-namespace ABPDemo.System
+namespace ABPDemo.Authentication
 {
     public class AuthenticationAppService : ABPDemoAppService, IAuthenticationAppService
     {
@@ -32,22 +36,25 @@ namespace ABPDemo.System
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AuthOptions _authOptions;
         private readonly HttpContext _context;
+        private readonly IRepository<OperationLog> _operateLogRepo;
 
         public AuthenticationAppService(
             SignInManager<IdentityUser> signInManager,
             IdentitySecurityLogManager identitySecurityLogManager,
             UserManager<IdentityUser> userManager,
             IOptions<AuthOptions> options,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IRepository<OperationLog> operateLogRepo)
         {
             _signInManager = signInManager;
             _identitySecurityLogManager = identitySecurityLogManager;
             _userManager = userManager;
             _authOptions = options.Value;
             _context = httpContextAccessor.HttpContext;
+            _operateLogRepo = operateLogRepo;
         }
 
-        public async Task LoginAsync(LoginInput input, CancellationToken cancellationToken)
+        public async Task<string> LoginAsync(LoginInput input, CancellationToken cancellationToken)
         {
             SignInResult result;
             using (var uow = UnitOfWorkManager.Begin(requiresNew: true))
@@ -70,23 +77,35 @@ namespace ABPDemo.System
             var user = await _userManager.FindByNameAsync(input.UserName);
             var token = await GenerateUserTokenAsync(user, input.RememberMe);
 
-            _context.Response.Headers["Access-Control-Expose-Headers"] = "*";
-            _context.Response.Headers["X-Bearer"] = token;
+            var ip = _context.GetRemoteIpAddress();
+            var operation = OperationLog.Create(user.UserName, user.Name, user.GetProperty<UserAccountType>("Type"), new LoginData { IP = ip });
+            await _operateLogRepo.InsertAsync(operation, false, cancellationToken);
+
+            return token;
         }
 
         [Authorize]
         public async Task LoginOutAsync(CancellationToken cancellationToken)
         {
             await _signInManager.SignOutAsync();
-        }
+
+            var user = await _userManager.FindByIdAsync(CurrentUser.Id.ToString());
+            var ip = _context.GetRemoteIpAddress();
+            var operation = OperationLog.Create(user.UserName, user.Name, user.GetProperty<UserAccountType>("Type"), new LogoutData { IP = ip });
+            await _operateLogRepo.InsertAsync(operation, false, cancellationToken);
+    }
 
         [Authorize]
-        public async Task RefreshTokenAsync(CancellationToken cancellationToken)
+        public async Task<string> RefreshTokenAsync(CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByIdAsync(CurrentUser.Id.ToString());
             var token = await GenerateUserTokenAsync(user, false);
-            _context.Response.Headers["Access-Control-Expose-Headers"] = "*";
-            _context.Response.Headers["X-Bearer"] = token;
+
+            var ip = _context.GetRemoteIpAddress();
+            var operation = OperationLog.Create(user.UserName, user.Name, user.GetProperty<UserAccountType>("Type"), new LoginData { IP = ip });
+            await _operateLogRepo.InsertAsync(operation, false, cancellationToken);
+
+            return token;
         }
 
         private async Task<string> GenerateUserTokenAsync(IdentityUser user, bool rememberMe)

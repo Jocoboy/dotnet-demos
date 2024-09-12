@@ -1,4 +1,5 @@
 ﻿using ABPDemo.StudentManagement;
+using ABPDemo.SystemManagement;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace ABPDemo.EntityFrameworkCore
 {
     public static class ABPdemoDbContextModelCreatingExtensions
     {
-        public static void ConfigureStudentManagement(this ModelBuilder builder)
+        public static void ConfigureSystemManagement(this ModelBuilder builder)
         {
             /* Configure your own tables/entities inside here */
 
@@ -24,6 +25,16 @@ namespace ABPDemo.EntityFrameworkCore
              * }
              */
 
+            builder.Entity<OperationLog>(b =>
+            {
+                b.ToTable(ABPDemoConsts.DbTablePrefix + "OperationLogs", ABPDemoConsts.DbSchema);
+                b.Property(x => x.Data).HasColumnType("jsonb");
+                b.ConfigureByConvention();
+            });
+        }
+
+        public static void ConfigureStudentManagement(this ModelBuilder builder)
+        {
             builder.Entity<Course>(b =>
             {
                 b.ToTable(ABPDemoConsts.DbTablePrefix + "Courses", ABPDemoConsts.DbSchema);

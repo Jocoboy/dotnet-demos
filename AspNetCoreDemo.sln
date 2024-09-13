@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Web", "AspNetCoreDemo.Web\AspNetCoreDemo.Web.csproj", "{56000DFF-3130-4FEA-978F-FD32C660DCAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Web", "src\AspNetCoreDemo.Web\AspNetCoreDemo.Web.csproj", "{56000DFF-3130-4FEA-978F-FD32C660DCAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Repository", "AspNetCoreDemo.Repository\AspNetCoreDemo.Repository.csproj", "{3922C9F3-05CF-4899-98A6-376C96B3F827}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Repository", "src\AspNetCoreDemo.Repository\AspNetCoreDemo.Repository.csproj", "{3922C9F3-05CF-4899-98A6-376C96B3F827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Service", "AspNetCoreDemo.Service\AspNetCoreDemo.Service.csproj", "{42FA5096-2AC2-4C2B-A092-66E190508FD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Service", "src\AspNetCoreDemo.Service\AspNetCoreDemo.Service.csproj", "{42FA5096-2AC2-4C2B-A092-66E190508FD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Common", "AspNetCoreDemo.Common\AspNetCoreDemo.Common.csproj", "{77FFDA84-D310-46B4-9A0D-024DEB3C3B55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Common", "src\AspNetCoreDemo.Common\AspNetCoreDemo.Common.csproj", "{77FFDA84-D310-46B4-9A0D-024DEB3C3B55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Model", "AspNetCoreDemo.Model\AspNetCoreDemo.Model.csproj", "{656878C5-2999-4D64-9697-220ACCA5D454}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreDemo.Model", "src\AspNetCoreDemo.Model\AspNetCoreDemo.Model.csproj", "{656878C5-2999-4D64-9697-220ACCA5D454}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

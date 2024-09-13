@@ -3,11 +3,15 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AspNetCoreDemo.Common\AspNetCoreDemo.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="IRepository\Base\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,7 @@
-﻿using AspNetCoreDemo.Model.Dtos;
+﻿using AspNetCoreDemo.Common;
+using AspNetCoreDemo.Common.Extensions;
+using AspNetCoreDemo.Model.Dtos;
+using AspNetCoreDemo.Model.Enums;
 using AspNetCoreDemo.Model.ViewModels;
 using AspNetCoreDemo.Service.IService;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AspNetCoreDemo.Web.Controllers
 {
     [ApiController]
-    [Route("student/")]
+    [Route("[controller]/[action]")]
     //[Authorize]
     public class StudentController : ControllerBase
     {
@@ -22,7 +25,6 @@ namespace AspNetCoreDemo.Web.Controllers
         /// 获取学生分页列表
         /// </summary>
         [HttpPost]
-        [Route("list")]
         public PageResultViewModel<StudentDataDto> GetStudentList(StudentSearchDto dto)
         {
             return new PageResultViewModel<StudentDataDto>()
@@ -30,6 +32,25 @@ namespace AspNetCoreDemo.Web.Controllers
                 List = _student.GetStudentData(out long count, dto),
                 Count = count
             };
+        }
+
+        /// <summary>
+        /// 修改学生信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public MessageDto<string> UpdateStudentInfo(StudentUpdateDto dto)
+        {
+            var student = _student.GetStudentById(dto.Id);
+
+            if(student == null) return ResultHelper<string>.GetResult(ErrorEnum.DataError, null, "该学生不存在!");
+
+            student.Name = dto.Name;
+            student.StudentLevel = dto.StudentLevel;
+
+            _student.UpdateStudent(student);
+
+            return ResultHelper<string>.GetResult(ErrorEnum.Success, null, EnumExtension.GetRemark(ErrorEnum.Success));
         }
     }
 }

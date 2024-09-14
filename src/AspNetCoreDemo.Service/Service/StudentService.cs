@@ -26,5 +26,9 @@ namespace AspNetCoreDemo.Service.Service
 
             return list;
         }
+
+        public Student GetStudentById(int id) => _student.GetSingleById(id);
+
+        public void UpdateStudent(Student student) => _student.Update(student);
     }
 }

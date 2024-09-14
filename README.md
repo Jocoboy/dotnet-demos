@@ -8,7 +8,7 @@ A demo for Monolithic Architecture based on ASP.NET Core, which provides restful
 
 ### Architecture
 
-![aspnetcore_demo_architecture](https://Jocoboy.github.io/picx-images-hosting/dotnet-demos/aspnetcore_demo_architecture.1hs62wna7p.webp)
+![aspnetcore_layer_deps](https://jocoboy.github.io/Hexo-Blog/2024/08/13/abp-and-ddd/aspnetcore_layer_deps.png)
 
 ### Environment
 

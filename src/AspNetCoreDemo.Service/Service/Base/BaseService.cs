@@ -1,4 +1,4 @@
-﻿using AspNetCoreDemo.Repository.IRepository;
+﻿using AspNetCoreDemo.Repository.IRepository.Base;
 using AspNetCoreDemo.Service.IService.Base;
 using System;
 using System.Collections.Generic;

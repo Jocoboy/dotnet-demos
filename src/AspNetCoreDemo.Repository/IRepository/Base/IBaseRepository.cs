@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AspNetCoreDemo.Repository.IRepository
+namespace AspNetCoreDemo.Repository.IRepository.Base
 {
     /// <summary>
     /// 仓储基类调用通用CRUD

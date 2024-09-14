@@ -3,7 +3,7 @@ using AspNetCoreDemo.Common.Extensions;
 using AspNetCoreDemo.Common.Extensions.JWT;
 using AspNetCoreDemo.Common.Extensions.Swagger;
 using AspNetCoreDemo.Model.EFCore;
-using AspNetCoreDemo.Repository.IRepository;
+using AspNetCoreDemo.Repository.IRepository.Base;
 using AspNetCoreDemo.Repository.Repository.Base;
 using AspNetCoreDemo.Service.IService.Base;
 using AspNetCoreDemo.Service.Service.Base;
@@ -59,9 +59,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwaggerExt();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "AspNetCoreDemo API");
+        options.RoutePrefix = string.Empty;
+    });
 }
-//app.UseSwaggerExt();
 
 app.UseCustomHttpContext();
 app.UseHttpsRedirection();

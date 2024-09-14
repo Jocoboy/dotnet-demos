@@ -1,7 +1,7 @@
 ﻿using AspNetCoreDemo.Common.Extensions;
 using AspNetCoreDemo.Model.Dtos;
 using AspNetCoreDemo.Model.EFCore;
-using AspNetCoreDemo.Repository.IRepository;
+using AspNetCoreDemo.Repository.IRepository.Base;
 using AspNetCoreDemo.Repository.Uow;
 using Microsoft.EntityFrameworkCore;
 using System;

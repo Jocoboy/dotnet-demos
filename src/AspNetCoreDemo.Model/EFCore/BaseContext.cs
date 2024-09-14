@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AspNetCoreDemo.Model.EFCore.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,14 @@ namespace AspNetCoreDemo.Model.EFCore
         {
 
         }
+
+        public DbSet<Student> Student { get; set; }
+
+        public DbSet<Course> Course { get; set; }
+
+        public DbSet<StudentCourse> StudentCourse { get; set; }
+
+        public DbSet<StudentScore> StudentScore { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

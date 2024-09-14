@@ -10,8 +10,4 @@
     <ProjectReference Include="..\AspNetCoreDemo.Common\AspNetCoreDemo.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="IRepository\Base\" />
-  </ItemGroup>
-
 </Project>

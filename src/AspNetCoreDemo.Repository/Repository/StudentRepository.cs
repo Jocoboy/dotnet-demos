@@ -24,7 +24,7 @@ namespace AspNetCoreDemo.Repository.Repository
                 new MySqlParameter("@StudentLevel", dto.StudentLevel)
            };
 
-            string countsql = @"SELECT COUNT(p.Id) FROM student s";
+            string countsql = @"SELECT COUNT(s.Id) FROM student s";
             string sql = @"SELECT Name, StudentLevel FROM student s";
             string where = " WHERE 1 = 1";
 

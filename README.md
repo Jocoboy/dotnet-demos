@@ -39,4 +39,4 @@ The Repository-Service pattern relies on dependency injection to work properly. 
 - :white_check_mark: Add ModelStateValidateExtension to intercept error and catch invalid fields of models directly before entering the method.
 - :white_check_mark: Add CustomExceptionFilter to catch expected exceptions.
 - :white_check_mark: Add RemarkAttribute to bind error code with corresponding message.
-
+- :white_check_mark: Add login for both front page and back page with two ways, including password login and sms login(use [IHuYi](https://www.ihuyi.com/) API for test).

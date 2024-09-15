@@ -3,6 +3,7 @@ using AspNetCoreDemo.Model.EFCore.Entity;
 using AspNetCoreDemo.Repository.IRepository;
 using AspNetCoreDemo.Repository.IRepository.Base;
 using AspNetCoreDemo.Service.IService;
+using AspNetCoreDemo.Service.Service.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreDemo.Service.Service
 {
-    public class StudentService : IStudentService
+    public class StudentService : BaseService<Student>, IStudentService
     {
         IStudentRepository _student;
 
@@ -26,9 +27,5 @@ namespace AspNetCoreDemo.Service.Service
 
             return list;
         }
-
-        public Student GetStudentById(int id) => _student.GetSingleById(id);
-
-        public void UpdateStudent(Student student) => _student.Update(student);
     }
 }

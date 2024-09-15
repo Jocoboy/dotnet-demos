@@ -13,7 +13,7 @@ namespace AspNetCoreDemo.Common.Extensions.Swagger
     public static class SwaggerExtension
     {
         /// <summary>
-        /// 添加扩展方法
+        /// Swagger扩展方法
         /// </summary>
         /// <param name="builder"></param>
         public static void AddSwaggerGenExt(this WebApplicationBuilder builder)

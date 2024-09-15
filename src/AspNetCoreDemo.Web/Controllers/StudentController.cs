@@ -11,7 +11,7 @@ namespace AspNetCoreDemo.Web.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    //[Authorize]
+    [Authorize]
     public class StudentController : ControllerBase
     {
         readonly IStudentService _student;
@@ -37,18 +37,17 @@ namespace AspNetCoreDemo.Web.Controllers
         /// <summary>
         /// 修改学生信息
         /// </summary>
-        /// <returns></returns>
         [HttpPost]
-        public MessageDto<string> UpdateStudentInfo(StudentUpdateDto dto)
+        public MessageDto<string> UpdateStudentInfo(StudentUpdateViewModel model)
         {
-            var student = _student.GetStudentById(dto.Id);
+            var student = _student.GetSingleById(model.Id);
 
             if(student == null) return ResultHelper<string>.GetResult(ErrorEnum.DataError, null, "该学生不存在!");
 
-            student.Name = dto.Name;
-            student.StudentLevel = dto.StudentLevel;
+            student.Name = model.Name;
+            student.StudentLevel = model.StudentLevel;
 
-            _student.UpdateStudent(student);
+            _student.Update(student);
 
             return ResultHelper<string>.GetResult(ErrorEnum.Success, null, EnumExtension.GetRemark(ErrorEnum.Success));
         }

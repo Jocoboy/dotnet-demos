@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreDemo.Service.IService
 {
-    public interface IStudentService: IBaseService<Student>
+    public interface ISysUserService: IBaseService<SysUser>
     {
-        List<StudentDataDto> GetStudentData(out long count, StudentSearchDto dto, bool isAll = false);
+        MessageDto<UserLoginResDto> ValSysUser(string userLgnId, string pwd);
     }
 }

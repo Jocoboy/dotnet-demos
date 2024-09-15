@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using AspNetCoreDemo.Model.Dtos;
+using AspNetCoreDemo.Model.EFCore.Entity;
+using AutoMapper;
 
 namespace AspNetCoreDemo.Common.AutoMappers
 {
@@ -6,6 +8,7 @@ namespace AspNetCoreDemo.Common.AutoMappers
     {
         public UserApiMappersProfile()
         {
+            CreateMap<SysUser, CurrentUserDto>(MemberList.Source).ReverseMap();
         }
     }
 }

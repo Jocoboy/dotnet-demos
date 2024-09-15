@@ -15,13 +15,14 @@ namespace AspNetCoreDemo.Model.EFCore
         {
 
         }
+        
+        public DbSet<Person> Person { get; set; }
+        public DbSet<SMSInfo> SMSInfo { get; set; }
+        public DbSet<SysUser> SysUser { get; set; }
 
         public DbSet<Student> Student { get; set; }
-
         public DbSet<Course> Course { get; set; }
-
         public DbSet<StudentCourse> StudentCourse { get; set; }
-
         public DbSet<StudentScore> StudentScore { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

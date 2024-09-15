@@ -1,6 +1,7 @@
 ﻿using AspNetCoreDemo.Model.Enums;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,29 @@ namespace AspNetCoreDemo.Common.Extensions
                 };
             });
             #endregion
+        }
+
+        /// <summary>
+        /// 检查标签错误，返回首条错误
+        /// </summary>
+        /// <param name="ModelState"></param>
+        /// <returns></returns>
+        public static string GetErrorMessage(ModelStateDictionary ModelState)
+        {
+            List<string> errorList = new List<string>();
+            //获取所有错误的Key
+            List<string> Keys = ModelState.Keys.ToList();
+            //获取每一个key对应的ModelStateDictionary
+            foreach (var key in Keys)
+            {
+                var errors = ModelState[key].Errors.ToList();
+                //将错误描述添加到sb中
+                foreach (var error in errors)
+                {
+                    errorList.Add(error.ErrorMessage);
+                }
+            }
+            return errorList[0];
         }
     }
 }

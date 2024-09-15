@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AspNetCoreDemo.Model.Dtos
+namespace AspNetCoreDemo.Model.ViewModels
 {
-    public class StudentUpdateDto
+    public class StudentUpdateViewModel
     {
         public int Id { get; set; }
 

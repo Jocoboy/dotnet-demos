@@ -82,6 +82,9 @@ namespace AspNetCoreDemo.Common.Extensions.JWT
             if (claimInfos.Any())
                 claims.AddRange(claimInfos.Select(i => new Claim(i.Key, i.Value ?? "")));
 
+            // 添加角色授权
+            claims.Add(new Claim(ClaimTypes.Role, claimInfos["RoleCode"]));
+
             return claims;
         }
 

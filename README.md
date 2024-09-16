@@ -34,9 +34,12 @@ The Repository-Service pattern relies on dependency injection to work properly. 
 #### Details
 
 - :white_check_mark: Use JSON Web Token (JWT) for Authentication.
-- :white_check_mark: Add ServiceExtension to realize DI using reflection without Autofac.
+- :white_check_mark: Use Log4Net to define output appenders of logs.
+- :white_check_mark: Add Service Extension to realize DI using reflection without Autofac.
+- :white_check_mark: Add Linq Extension to create and compose for Linq/Lamada expression.
+- :white_check_mark: Add ModelStateValidate Extension to intercept error and catch invalid fields of models directly before entering the method.
 - :white_check_mark: Add RouteConvention to configure global routing prefix.
-- :white_check_mark: Add ModelStateValidateExtension to intercept error and catch invalid fields of models directly before entering the method.
 - :white_check_mark: Add CustomExceptionFilter to catch expected exceptions.
 - :white_check_mark: Add RemarkAttribute to bind error code with corresponding message.
-- :white_check_mark: Add login for both front page and back page with two ways, including password login and sms login(use [IHuYi](https://www.ihuyi.com/) API for test).
+- :white_check_mark: Add OprLog module to record user operation in database.
+- :white_check_mark: Add Login module for both front page and back page in two ways, including password login and sms login(use [IHuYi](https://www.ihuyi.com/) API for test).

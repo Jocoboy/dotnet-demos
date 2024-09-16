@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AspNetCoreDemo.Common.Extensions
+namespace AspNetCoreDemo.Common.Extensions.Linq
 {
     public static class PageExtension
     {

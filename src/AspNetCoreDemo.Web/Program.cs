@@ -15,6 +15,8 @@ using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddLog4Net("log4net.Config");
+
 // Add services to the container.
 
 builder.Services.AddControllers(options =>{

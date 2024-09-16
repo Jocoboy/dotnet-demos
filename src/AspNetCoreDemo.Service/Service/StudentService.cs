@@ -14,7 +14,7 @@ namespace AspNetCoreDemo.Service.Service
 {
     public class StudentService : BaseService<Student>, IStudentService
     {
-        IStudentRepository _student;
+        readonly IStudentRepository _student;
 
         public StudentService(IStudentRepository student)
         {

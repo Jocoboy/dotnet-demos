@@ -15,10 +15,13 @@ namespace AspNetCoreDemo.Model.EFCore
         {
 
         }
-        
-        public DbSet<Person> Person { get; set; }
-        public DbSet<SMSInfo> SMSInfo { get; set; }
+
+        #region 基础表
         public DbSet<SysUser> SysUser { get; set; }
+        public DbSet<OprLog> OprLog { get; set; }
+        public DbSet<SMSInfo> SMSInfo { get; set; }
+        public DbSet<Person> Person { get; set; }
+        #endregion
 
         public DbSet<Student> Student { get; set; }
         public DbSet<Course> Course { get; set; }

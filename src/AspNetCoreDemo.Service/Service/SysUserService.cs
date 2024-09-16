@@ -13,18 +13,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using AspNetCoreDemo.Repository.IRepository.Base;
+using AspNetCoreDemo.Common.Extensions;
 
 namespace AspNetCoreDemo.Service.Service
 {
     public class SysUserService : BaseService<SysUser>, ISysUserService
     {
         readonly ISysUserRepository _sysUser;
+        readonly IBaseRepository<OprLog> _oprLog;
         readonly IMapper _map;
 
-        public SysUserService(IMapper map, ISysUserRepository sysUser)
+        public SysUserService(IMapper map, ISysUserRepository sysUser, IBaseRepository<OprLog> oprLog)
         {
             _map = map;
             _sysUser = sysUser;
+            _oprLog = oprLog;
         }
 
         public MessageDto<UserLoginResDto> ValSysUser(string userLgnId, string pwd)
@@ -43,6 +47,17 @@ namespace AspNetCoreDemo.Service.Service
 
             if (user.LoginNum >= 5)
             {
+                _oprLog.Add(new OprLog()
+                {
+                    OprId = user.Id,
+                    OprRole = user.RoleCode,
+                    OprName = user.UserName,
+                    OprDate = DateTime.Now,
+                    IP = CommonHelper.GetIp(),
+                    OprModule = EnumExtension.GetRemark(OprModuleType.Login),
+                    OprRemark = $"管理员【{user.UserName}】失败次数超过5次，账号锁定30分钟",
+                });
+
                 user.LoginNum = 0;
                 user.LastLoginDate = DateTime.Now;
                 _sysUser.Update(user);
@@ -71,6 +86,17 @@ namespace AspNetCoreDemo.Service.Service
 
             var dto = _map.Map<CurrentUserDto>(user);
             string token = JWTExtension.GetUserToken(dto);
+
+            _oprLog.Add(new OprLog()
+            {
+                OprId = user.Id,
+                OprRole = user.RoleCode,
+                OprName = user.UserName,
+                OprDate = DateTime.Now,
+                IP = CommonHelper.GetIp(),
+                OprModule = EnumExtension.GetRemark(OprModuleType.Login),
+                OprRemark = $"管理员【{user.UserName}】登录"
+            });
 
             return ResultHelper<UserLoginResDto>.GetResult(ErrorEnum.Success, new UserLoginResDto
             {

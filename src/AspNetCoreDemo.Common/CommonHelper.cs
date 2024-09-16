@@ -1,4 +1,5 @@
-﻿using AspNetCoreDemo.Model.Dtos;
+﻿using AspNetCoreDemo.Common.Extensions;
+using AspNetCoreDemo.Model.Dtos;
 using Newtonsoft.Json;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -153,6 +154,32 @@ namespace AspNetCoreDemo.Common
         public static string GetSecurityKey(string clientId)
         {
             return BitConverter.ToString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(DateTime.Now.ToString() + clientId))).Replace("-", null).ToLower();
+        }
+        #endregion
+
+        #region 获取IP
+        /// <summary>
+        /// 获取Ip
+        /// </summary>
+        /// <returns></returns>
+        public static string GetIp()
+        {
+            var httpContext = CustomHttpContext.Current;
+            string ip = httpContext.Connection.RemoteIpAddress.ToString();
+
+            // 存在并设置Nginx时，获取Nginx传递的ip参数
+            if (httpContext.Request.Headers.Keys.Contains("X-Forwarded-For")
+                && !string.IsNullOrWhiteSpace(httpContext.Request.Headers["X-Forwarded-For"]))
+            {
+                ip = httpContext.Request.Headers["X-Forwarded-For"].ToString().Split(",", StringSplitOptions.RemoveEmptyEntries)[0];
+            }
+            else if (httpContext.Request.Headers.Keys.Contains("X-Real-IP")
+                && !string.IsNullOrWhiteSpace(httpContext.Request.Headers["X-Real-IP"]))
+            {
+                ip = httpContext.Request.Headers["X-Real-IP"].ToString();
+            }
+
+            return ip;
         }
         #endregion
     }

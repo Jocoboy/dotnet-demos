@@ -12,16 +12,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
+using AspNetCoreDemo.Common.Extensions;
 
 namespace AspNetCoreDemo.Service.Service
 {
     public class PersonService : BaseService<Person>, IPersonService
     {
-        private readonly IBaseRepository<Person> _person;
+        readonly IBaseRepository<Person> _person;
+        readonly IBaseRepository<OprLog> _oprLog;
 
-        public PersonService(IBaseRepository<Person> person)
+        public PersonService(IBaseRepository<Person> person, IBaseRepository<OprLog> oprLog)
         {
             _person = person;
+            _oprLog = oprLog;
         }
 
         public MessageDto<string> ValPerson(string phone)
@@ -35,6 +38,17 @@ namespace AspNetCoreDemo.Service.Service
 
             person.LastLoginDate = DateTime.Now;
             _person.Update(person);
+
+            _oprLog.Add(new OprLog()
+            {
+                OprId = person.Id,
+                OprRole = "person",
+                OprName = person.Phone,
+                OprDate = DateTime.Now,
+                IP = CommonHelper.GetIp(),
+                OprModule = EnumExtension.GetRemark(OprModuleType.Login),
+                OprRemark = "用户【" + person.Phone + "】登录",
+            });
 
             var token = JWTExtension.GetUserToken(new CurrentUserDto()
             {
@@ -78,6 +92,17 @@ namespace AspNetCoreDemo.Service.Service
 
             person.LoginNum = 0;
             _person.Update(person);
+
+            _oprLog.Add(new OprLog()
+            {
+                OprId = person.Id,
+                OprRole = "person",
+                OprName = person.Phone,
+                OprDate = DateTime.Now,
+                IP = CommonHelper.GetIp(),
+                OprModule = EnumExtension.GetRemark(OprModuleType.Login),
+                OprRemark = "用户【" + person.Phone + "】登录",
+            });
 
             var token = JWTExtension.GetUserToken(new CurrentUserDto()
             {

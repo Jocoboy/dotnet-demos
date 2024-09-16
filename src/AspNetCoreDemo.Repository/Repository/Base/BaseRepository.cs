@@ -1,4 +1,4 @@
-﻿using AspNetCoreDemo.Common.Extensions;
+﻿using AspNetCoreDemo.Common.Extensions.Linq;
 using AspNetCoreDemo.Model.Dtos;
 using AspNetCoreDemo.Model.EFCore;
 using AspNetCoreDemo.Repository.IRepository.Base;
@@ -102,6 +102,10 @@ namespace AspNetCoreDemo.Repository.Repository.Base
             return _context.Set<T>().Where(whereExpression).AsNoTracking().ToList();
         }
 
+        public (List<T>, int) GetPageListByExpression(Expression<Func<T, bool>> whereExpression, PageDto dto)
+        {
+            return ( _context.Set<T>().AsNoTracking().Where(whereExpression).Page(dto.PageSize, dto.Page, out int totalCount).ToList(), totalCount);
+        }
 
         public async Task<(List<T>, int)> GetPageListByExpressionAsync(Expression<Func<T, bool>> whereExpression, PageDto dto)
         {

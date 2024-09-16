@@ -1,4 +1,5 @@
 ﻿using AspNetCoreDemo.Model.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,8 @@ namespace AspNetCoreDemo.Repository.IRepository.Base
         public Task<List<T>> GetListByExpressionAsync(Expression<Func<T, bool>> whereExpression, Expression<Func<T, object>> orderByExpression, bool isAsc = true);
 
         public List<T> GetListAsNoTrackingByExpression(Expression<Func<T, bool>> whereExpression);
+
+        public (List<T>, int) GetPageListByExpression(Expression<Func<T, bool>> whereExpression, PageDto dto);
 
         public Task<(List<T>, int)> GetPageListByExpressionAsync(Expression<Func<T, bool>> whereExpression, PageDto pageDto);
 

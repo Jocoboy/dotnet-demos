@@ -16,6 +16,7 @@ using AutoMapper;
 using AspNetCoreDemo.Repository.IRepository.Base;
 using AspNetCoreDemo.Common.Extensions;
 using AspNetCoreDemo.Model.Consts;
+using AspNetCoreDemo.Common.Extensions.Linq;
 
 namespace AspNetCoreDemo.Service.Service
 {
@@ -23,13 +24,18 @@ namespace AspNetCoreDemo.Service.Service
     {
         readonly ISysUserRepository _sysUser;
         readonly IBaseRepository<OprLog> _oprLog;
+        readonly IBaseRepository<SysRole> _sysRole;
+        readonly ISysMenuRepository _sysMenu;
         readonly IMapper _map;
 
-        public SysUserService(IMapper map, ISysUserRepository sysUser, IBaseRepository<OprLog> oprLog)
+        public SysUserService(IMapper map, ISysUserRepository sysUser, IBaseRepository<OprLog> oprLog, ISysMenuRepository sysMenu, IBaseRepository<SysRole> sysRole)
         {
+            _baseRepository = sysUser;
             _map = map;
             _sysUser = sysUser;
             _oprLog = oprLog;
+            _sysMenu = sysMenu;
+            _sysRole = sysRole;
         }
 
         public MessageDto<UserLoginResDto> ValSysUser(string userLgnId, string pwd)
@@ -103,6 +109,36 @@ namespace AspNetCoreDemo.Service.Service
             {
                 Token = token
             });
+        }
+
+        public List<FirstMenuDto> GetSysUserMenuByRole(string role)
+        {
+            var menus = _sysMenu.GetSysUserMenuByRole(role);
+
+            var result = new List<FirstMenuDto>();
+            foreach (var menu in menus)
+            {
+                var second = new List<SecondMenuDto>();
+
+                if (menu.Code.Substring(2, 2) == "00")
+                {
+                    var submenus= menus.Where(x => x.Code.Substring(2, 2) != "00" && x.Code.Substring(0, 2) == menu.Code.Substring(0, 2));
+                    foreach (var sub in submenus)
+                    {
+                        second.Add(new SecondMenuDto() { Name = sub.Name, Url = sub.Url});
+                    }
+
+                    result.Add(new FirstMenuDto()
+                    {
+                        Name = menu.Name,
+                        Url = menu.Url,
+                        Icon = menu.Icon,
+                        SecondMenus = second.Count > 0 ? second : null
+                    });
+                }
+            }
+
+            return result;
         }
     }
 }

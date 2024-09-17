@@ -1,5 +1,19 @@
 INSERT INTO aspnetcoredemo.sysuser (Id, RoleCode, UserLgnId, UserName, UserPwd, IsLock, Remark, LoginNum, LastLoginDate, RegDate) VALUES(1, 'admin', 'jocoboy', 'Jocoboy', '96e79218965eb72c92a549dd5a330112', 0, 'Ä¬ÈÏÃÜÂë£º111111', NULL, NULL, '2024-09-15 00:00:00');
 
+INSERT INTO aspnetcoredemo.sysrole (Id, RoleCode, MenuCode) VALUES(1, 'admin', '0100');
+INSERT INTO aspnetcoredemo.sysrole (Id, RoleCode, MenuCode) VALUES(2, 'admin', '0200');
+INSERT INTO aspnetcoredemo.sysrole (Id, RoleCode, MenuCode) VALUES(3, 'admin', '0201');
+INSERT INTO aspnetcoredemo.sysrole (Id, RoleCode, MenuCode) VALUES(4, 'admin', '0202');
+INSERT INTO aspnetcoredemo.sysrole (Id, RoleCode, MenuCode) VALUES(5, 'admin', '0300');
+INSERT INTO aspnetcoredemo.sysrole (Id, RoleCode, MenuCode) VALUES(6, 'admin', '0301');
+
+INSERT INTO aspnetcoredemo.sysmenu (Id, Code, Name, Url, Icon, Status, Seq) VALUES(1, '0100', '²Ëµ¥1', '/menu1', 'menu1', 'Y', 1);
+INSERT INTO aspnetcoredemo.sysmenu (Id, Code, Name, Url, Icon, Status, Seq) VALUES(2, '0200', '²Ëµ¥2', '/menu2', 'menu2', 'Y', 2);
+INSERT INTO aspnetcoredemo.sysmenu (Id, Code, Name, Url, Icon, Status, Seq) VALUES(3, '0201', '²Ëµ¥2-1', '/menu21', NULL, 'Y', 3);
+INSERT INTO aspnetcoredemo.sysmenu (Id, Code, Name, Url, Icon, Status, Seq) VALUES(4, '0202', '²Ëµ¥2-2', '/menu22', NULL, 'Y', 4);
+INSERT INTO aspnetcoredemo.sysmenu (Id, Code, Name, Url, Icon, Status, Seq) VALUES(5, '0300', '²Ëµ¥3', '/menu3', 'menu3', 'Y', 5);
+INSERT INTO aspnetcoredemo.sysmenu (Id, Code, Name, Url, Icon, Status, Seq) VALUES(6, '0301', '²Ëµ¥3-1', '/menu31', NULL, 'Y', 6);
+
 INSERT INTO aspnetcoredemo.person (Id, Phone, Pwd, RegDate, LoginNum, LastLoginDate) VALUES(1, '17367102860', '96e79218965eb72c92a549dd5a330112', '2024-09-15 00:00:00', 0, NULL);
 
 INSERT INTO aspnetcoredemo.studentscore (StudentId, `Year`, TotalGrade) VALUES(1, 2022, 30.0);

@@ -12,5 +12,6 @@ namespace AspNetCoreDemo.Service.IService
     public interface ISysUserService: IBaseService<SysUser>
     {
         MessageDto<UserLoginResDto> ValSysUser(string userLgnId, string pwd);
+        List<FirstMenuDto> GetSysUserMenuByRole(string role);
     }
 }

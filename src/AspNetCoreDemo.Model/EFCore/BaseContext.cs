@@ -18,6 +18,8 @@ namespace AspNetCoreDemo.Model.EFCore
 
         #region 基础表
         public DbSet<SysUser> SysUser { get; set; }
+        public DbSet<SysRole> SysRole { get; set; }
+        public DbSet<SysMenu> SysMenu { get; set; }
         public DbSet<OprLog> OprLog { get; set; }
         public DbSet<SMSInfo> SMSInfo { get; set; }
         public DbSet<Person> Person { get; set; }

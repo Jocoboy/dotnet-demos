@@ -21,11 +21,13 @@ namespace AspNetCoreDemo.Web.Controllers
     {
         readonly ISmsInfoService _smsInfo;
         readonly IOprLogService _oprLog;
+        readonly ISysUserService _sysUser;
 
-        public BaseInfoController(ISmsInfoService smsInfo, IOprLogService prLog)
+        public BaseInfoController(ISmsInfoService smsInfo, IOprLogService prLog, ISysUserService sysUser)
         {
             _smsInfo = smsInfo;
             _oprLog = prLog;
+            _sysUser = sysUser;
         }
 
         /// <summary>
@@ -55,6 +57,21 @@ namespace AspNetCoreDemo.Web.Controllers
             var smsinfo = _smsInfo.SendSMSInfo(phone, "您的验证码是：" + code + "。请不要把验证码泄露给其他人。");
             return ResultHelper<string>.GetResult(ErrorType.Success);
 #endif
+        }
+
+        /// <summary>
+        /// 后台菜单列表
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        public MessageDto<List<FirstMenuDto>> GetAdminFrame()
+        {
+            var user = _sysUser.GetSingleById(Convert.ToInt32(JWTExtension.GetClaim(JWTExtension.TOKEN_ID)));
+
+            var data = _sysUser.GetSysUserMenuByRole(user.RoleCode);
+
+            return ResultHelper<List<FirstMenuDto>>.GetResult(ErrorType.Success, data);
         }
 
         /// <summary>

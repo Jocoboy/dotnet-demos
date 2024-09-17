@@ -32,7 +32,7 @@ namespace AspNetCoreDemo.Common.Extensions
                     .Select(e => e.Value.Errors.First().ErrorMessage)
                     .ToList();
                     var str = string.Join("|", errors);
-                    var res = ResultHelper<string>.GetResult(ErrorEnum.DataError, "", str);
+                    var res = ResultHelper<string>.GetResult(ErrorType.DataError, "", str);
                     return new BadRequestObjectResult(res);
                 };
             });

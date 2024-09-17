@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreDemo.Model.Enums
 {
-    public enum ErrorEnum
+    public enum ErrorType
     {
         /// <summary>
         /// 成功
@@ -20,6 +20,12 @@ namespace AspNetCoreDemo.Model.Enums
         /// </summary>
         [Remark("验证码数据不合法或不正确")]
         CodeError = -1005,
+
+        /// <summary>
+        /// 数据重复或数据已存在
+        /// </summary>
+        [Remark("数据重复或数据已存在")]
+        RepeatData = -1006,
 
         /// <summary>
         /// 若错误需要详细告知可使用此错误码后返回自定义错误内容

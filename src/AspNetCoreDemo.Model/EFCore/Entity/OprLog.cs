@@ -8,6 +8,19 @@ namespace AspNetCoreDemo.Model.EFCore.Entity
 {
     public class OprLog
     {
+        public OprLog() { }
+
+        public OprLog(int oprId, string oprRole, string oprName, DateTime oprDate, string ip, string oprModule, string oprRemark)
+        {
+            OprId = oprId;
+            OprRole = oprRole;
+            OprName = oprName;
+            OprDate = oprDate;
+            IP = ip;
+            OprModule = oprModule;
+            OprRemark = oprRemark;
+        }
+
         public int Id { get; set; }
 
         /// <summary>

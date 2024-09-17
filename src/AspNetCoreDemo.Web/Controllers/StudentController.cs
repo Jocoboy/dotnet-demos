@@ -42,14 +42,14 @@ namespace AspNetCoreDemo.Web.Controllers
         {
             var student = _student.GetSingleById(model.Id);
 
-            if(student == null) return ResultHelper<string>.GetResult(ErrorEnum.DataError, null, "该学生不存在!");
+            if(student == null) return ResultHelper<string>.GetResult(ErrorType.DataError, null, "该学生不存在!");
 
             student.Name = model.Name;
             student.StudentLevel = model.StudentLevel;
 
             _student.Update(student);
 
-            return ResultHelper<string>.GetResult(ErrorEnum.Success, null, EnumExtension.GetRemark(ErrorEnum.Success));
+            return ResultHelper<string>.GetResult(ErrorType.Success, null, EnumExtension.GetRemark(ErrorType.Success));
         }
     }
 }

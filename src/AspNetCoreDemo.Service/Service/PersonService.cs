@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
 using AspNetCoreDemo.Common.Extensions;
+using AspNetCoreDemo.Model.Consts;
 
 namespace AspNetCoreDemo.Service.Service
 {
@@ -23,6 +24,7 @@ namespace AspNetCoreDemo.Service.Service
 
         public PersonService(IBaseRepository<Person> person, IBaseRepository<OprLog> oprLog)
         {
+            _baseRepository = person;
             _person = person;
             _oprLog = oprLog;
         }
@@ -33,7 +35,7 @@ namespace AspNetCoreDemo.Service.Service
 
             if (person == null)
             {
-                return ResultHelper<string>.GetResult(ErrorEnum.DataError, null, "手机号不正确");
+                return ResultHelper<string>.GetResult(ErrorType.DataError, null, "手机号不正确");
             }
 
             person.LastLoginDate = DateTime.Now;
@@ -42,11 +44,11 @@ namespace AspNetCoreDemo.Service.Service
             _oprLog.Add(new OprLog()
             {
                 OprId = person.Id,
-                OprRole = "person",
+                OprRole = RoleType.person,
                 OprName = person.Phone,
                 OprDate = DateTime.Now,
                 IP = CommonHelper.GetIp(),
-                OprModule = EnumExtension.GetRemark(OprModuleType.Login),
+                OprModule = OprModuleType.login,
                 OprRemark = "用户【" + person.Phone + "】登录",
             });
 
@@ -54,11 +56,11 @@ namespace AspNetCoreDemo.Service.Service
             {
                 Id = person.Id,
                 UserLgnId = person.Phone,
-                RoleCode = "person",
+                RoleCode = RoleType.person,
                 UserName = ""
             });
 
-            return ResultHelper<string>.GetResult(ErrorEnum.Success, data: token);
+            return ResultHelper<string>.GetResult(ErrorType.Success, data: token);
         }
 
         public MessageDto<string> ValPerson(string phone, string pwd)
@@ -67,7 +69,7 @@ namespace AspNetCoreDemo.Service.Service
 
             if (person == null)
             {
-                return ResultHelper<string>.GetResult(ErrorEnum.DataError, null, "手机号不正确");
+                return ResultHelper<string>.GetResult(ErrorType.DataError, null, "手机号不正确");
             }
 
             if (person.LoginNum == 5)//错误登录大于等于5次
@@ -75,19 +77,19 @@ namespace AspNetCoreDemo.Service.Service
                 person.LoginNum = 0;
                 person.LastLoginDate = DateTime.Now;
                 _person.Update(person);
-                return ResultHelper<string>.GetResult(ErrorEnum.DataError, message: "已登录错误5次，账号已锁定，请15分钟后再进行登录");
+                return ResultHelper<string>.GetResult(ErrorType.DataError, message: "已登录错误5次，账号已锁定，请15分钟后再进行登录");
             }
 
             if (DateTime.Compare(DateTime.Now, Convert.ToDateTime(person.LastLoginDate).AddMinutes(15)) <= 0)//解锁时间
             {
-                return ResultHelper<string>.GetResult(ErrorEnum.DataError, message: "已登录错误5次，账号已锁定，请15分钟后再进行登录");
+                return ResultHelper<string>.GetResult(ErrorType.DataError, message: "已登录错误5次，账号已锁定，请15分钟后再进行登录");
             }
 
             if (person.Pwd != CommonHelper.GenerateMD5(pwd))
             {
                 person.LoginNum += 1;
                 _person.Update(person);
-                return ResultHelper<string>.GetResult(ErrorEnum.DataError, message: "账号密码错误");
+                return ResultHelper<string>.GetResult(ErrorType.DataError, message: "账号密码错误");
             }
 
             person.LoginNum = 0;
@@ -96,11 +98,11 @@ namespace AspNetCoreDemo.Service.Service
             _oprLog.Add(new OprLog()
             {
                 OprId = person.Id,
-                OprRole = "person",
+                OprRole = RoleType.person,
                 OprName = person.Phone,
                 OprDate = DateTime.Now,
                 IP = CommonHelper.GetIp(),
-                OprModule = EnumExtension.GetRemark(OprModuleType.Login),
+                OprModule =OprModuleType.login,
                 OprRemark = "用户【" + person.Phone + "】登录",
             });
 
@@ -108,11 +110,12 @@ namespace AspNetCoreDemo.Service.Service
             {
                 Id = person.Id,
                 UserLgnId = person.Phone,
-                RoleCode = "person",
+                RoleCode = RoleType.person,
                 UserName = ""
             });
 
-            return ResultHelper<string>.GetResult(ErrorEnum.Success, data: token);
+            return ResultHelper<string>.GetResult(ErrorType.Success, data: token);
         }
+
     }
 }

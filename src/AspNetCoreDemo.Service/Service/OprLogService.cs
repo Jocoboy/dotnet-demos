@@ -20,6 +20,7 @@ namespace AspNetCoreDemo.Service.Service
 
         public OprLogService(IBaseRepository<OprLog> oprLog)
         {
+            _baseRepository = oprLog;
             _oprLog = oprLog;
         }
 

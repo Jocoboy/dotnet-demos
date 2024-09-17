@@ -11,6 +11,9 @@ namespace AspNetCoreDemo.Service.Service.Base
 {
     public class BaseService<T> : IBaseService<T> where T : class
     {
+        /// <summary>
+        /// 通过子类注入
+        /// </summary>
         protected IBaseRepository<T> _baseRepository;
 
         #region 查询

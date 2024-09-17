@@ -47,11 +47,14 @@ namespace AspNetCoreDemo.Web.Controllers
         public MessageDto<string> SendPhoneCode(string phone)
         {
             var code = MemoryCacheHelper.RandValCode(phone);
-            //var sign = "XX平台"; // TODO: 数据库获取
-            //var msgSgin = $"【{sign}】";
+            //var msgSgin = $"【XX平台】"; // TODO: 数据库获取
             //var smsinfo = _smsInfo.SendSMSInfo(phone, msgSgin + "验证码：" + code);
+#if DEBUG
+            return ResultHelper<string>.GetResult(ErrorType.Success, code);
+#else
             var smsinfo = _smsInfo.SendSMSInfo(phone, "您的验证码是：" + code + "。请不要把验证码泄露给其他人。");
-            return ResultHelper<string>.GetResult(ErrorEnum.Success);
+            return ResultHelper<string>.GetResult(ErrorType.Success);
+#endif
         }
 
         /// <summary>

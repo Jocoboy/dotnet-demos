@@ -20,6 +20,7 @@ namespace AspNetCoreDemo.Common.Extensions.JWT
     /// </summary>
     public static class JWTExtension
     {
+        public readonly static string TOKEN_ID = "Id";
         public static JWTTokenOptions TokenOptions {  get; set; } = new JWTTokenOptions();
 
         /// <summary>
@@ -94,6 +95,48 @@ namespace AspNetCoreDemo.Common.Extensions.JWT
             var credentials = new SigningCredentials(key, algorithm);
             var jwtToken = new JwtSecurityToken(issuer, audience, claims, expires: DateTime.Now.AddMinutes(expires), signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(jwtToken);
+        }
+
+        /// <summary>
+        /// 根据key获取Token中的一项信息
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static string GetClaim(string key)
+        {
+            var claim = string.Empty;
+            GetTokenInfo().TryGetValue(key, out claim);
+            return claim;
+        }
+
+        /// <summary>
+        /// 获取当前登录用户Token信息
+        /// </summary>
+        /// <returns></returns>
+        public static IDictionary<string, string> GetTokenInfo()
+        {
+            if (CustomHttpContext.Current == null)
+                return null;
+            var claims = CustomHttpContext.Current.User.Claims;
+            return ClaimsToDict(claims);
+        }
+
+        /// <summary>
+        /// Token信息转字典数据
+        /// </summary>
+        /// <param name="claims"></param>
+        /// <returns></returns>
+        private static IDictionary<string, string> ClaimsToDict(IEnumerable<Claim> claims)
+        {
+            Dictionary<string, string> claimInfos = new Dictionary<string, string>();
+            if (claims.Any())
+            {
+                foreach (var claim in claims)
+                {
+                    claimInfos.Add(claim.Type, claim.Value);
+                }
+            }
+            return claimInfos;
         }
     }
 }

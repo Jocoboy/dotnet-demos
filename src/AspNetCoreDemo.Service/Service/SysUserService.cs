@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AspNetCoreDemo.Repository.IRepository.Base;
 using AspNetCoreDemo.Common.Extensions;
+using AspNetCoreDemo.Model.Consts;
 
 namespace AspNetCoreDemo.Service.Service
 {
@@ -37,12 +38,12 @@ namespace AspNetCoreDemo.Service.Service
 
             if (user == null)
             {
-                return ResultHelper<UserLoginResDto>.GetResult(ErrorEnum.DataError, null, "用户名或密码不正确");
+                return ResultHelper<UserLoginResDto>.GetResult(ErrorType.DataError, null, "用户名或密码不正确");
             }
 
             if (user.IsLock)
             {
-                return ResultHelper<UserLoginResDto>.GetResult(ErrorEnum.DataError, null, "账号已被锁定，请联系管理员");
+                return ResultHelper<UserLoginResDto>.GetResult(ErrorType.DataError, null, "账号已被锁定，请联系管理员");
             }
 
             if (user.LoginNum >= 5)
@@ -54,14 +55,14 @@ namespace AspNetCoreDemo.Service.Service
                     OprName = user.UserName,
                     OprDate = DateTime.Now,
                     IP = CommonHelper.GetIp(),
-                    OprModule = EnumExtension.GetRemark(OprModuleType.Login),
+                    OprModule = OprModuleType.login,
                     OprRemark = $"管理员【{user.UserName}】失败次数超过5次，账号锁定30分钟",
                 });
 
                 user.LoginNum = 0;
                 user.LastLoginDate = DateTime.Now;
                 _sysUser.Update(user);
-                return ResultHelper<UserLoginResDto>.GetResult(ErrorEnum.DataError, null, "您失败的次数已超过5次，请30分钟后再试");
+                return ResultHelper<UserLoginResDto>.GetResult(ErrorType.DataError, null, "您失败的次数已超过5次，请30分钟后再试");
             }
 
             if (user.LastLoginDate != null)
@@ -69,7 +70,7 @@ namespace AspNetCoreDemo.Service.Service
                 var timeSpan = DateTime.Compare(DateTime.Now, Convert.ToDateTime(user.LastLoginDate).AddMinutes(30));
                 if (DateTime.Compare(DateTime.Now, Convert.ToDateTime(user.LastLoginDate).AddMinutes(30)) <= 0)
                 {
-                    return ResultHelper<UserLoginResDto>.GetResult(ErrorEnum.DataError, null, "您失败的次数已超过5次暂不可登录，请联系管理员");
+                    return ResultHelper<UserLoginResDto>.GetResult(ErrorType.DataError, null, "您失败的次数已超过5次暂不可登录，请联系管理员");
                 }
             }
 
@@ -77,7 +78,7 @@ namespace AspNetCoreDemo.Service.Service
             {
                 user.LoginNum += +1;
                 _sysUser.Update(user);
-                return ResultHelper<UserLoginResDto>.GetResult(ErrorEnum.DataError, null, "用户名或密码不正确");
+                return ResultHelper<UserLoginResDto>.GetResult(ErrorType.DataError, null, "用户名或密码不正确");
             }
 
             user.LoginNum = 0;
@@ -94,11 +95,11 @@ namespace AspNetCoreDemo.Service.Service
                 OprName = user.UserName,
                 OprDate = DateTime.Now,
                 IP = CommonHelper.GetIp(),
-                OprModule = EnumExtension.GetRemark(OprModuleType.Login),
+                OprModule = OprModuleType.login,
                 OprRemark = $"管理员【{user.UserName}】登录"
             });
 
-            return ResultHelper<UserLoginResDto>.GetResult(ErrorEnum.Success, new UserLoginResDto
+            return ResultHelper<UserLoginResDto>.GetResult(ErrorType.Success, new UserLoginResDto
             {
                 Token = token
             });

@@ -34,12 +34,12 @@ namespace AspNetCoreDemo.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return ResultHelper<UserLoginResDto>.GetResult(ErrorEnum.DataError, null, ModelStateValidateExtension.GetErrorMessage(ModelState));
+                return ResultHelper<UserLoginResDto>.GetResult(ErrorType.DataError, null, ModelStateValidateExtension.GetErrorMessage(ModelState));
             }
 
             if (!MemoryCacheHelper.CheckCode(key, model.Code))
             {
-                return ResultHelper<UserLoginResDto>.GetResult(ErrorEnum.CodeError, null, EnumExtension.GetRemark(ErrorEnum.CodeError));
+                return ResultHelper<UserLoginResDto>.GetResult(ErrorType.CodeError, null, EnumExtension.GetRemark(ErrorType.CodeError));
             }
 
             return _sysUser.ValSysUser(model.UserLgnId, model.UserPwd);

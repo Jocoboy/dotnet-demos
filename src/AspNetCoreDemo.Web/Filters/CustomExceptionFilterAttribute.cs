@@ -26,7 +26,7 @@ namespace AspNetCoreDemo.Web.Filters
                     msg = filterContext.Exception.Message;
                 }
 
-                filterContext.Result = new JsonResult(ResultHelper<string>.GetResult(ErrorEnum.DataError, null, msg));
+                filterContext.Result = new JsonResult(ResultHelper<string>.GetResult(ErrorType.DataError, null, msg));
 
                 filterContext.ExceptionHandled = true;
             }

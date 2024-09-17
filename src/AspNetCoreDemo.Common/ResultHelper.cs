@@ -15,7 +15,7 @@ namespace AspNetCoreDemo.Common
     /// <typeparam name="T"></typeparam>
     public static class ResultHelper<T> where T : class
     {
-        public static MessageDto<T> GetResult(ErrorEnum error, T data = null, string message = null)
+        public static MessageDto<T> GetResult(ErrorType error, T data = null, string message = null)
         {
 
             return message == null ? new MessageDto<T>() { Res = (int)error, Msg = error.GetRemark(), Data = data } :
@@ -24,7 +24,7 @@ namespace AspNetCoreDemo.Common
 
         public static MessageDto<T> Success(T data = null)
         {
-            return GetResult(ErrorEnum.Success, data);
+            return GetResult(ErrorType.Success, data);
         }
     }
 }

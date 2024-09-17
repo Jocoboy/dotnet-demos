@@ -157,6 +157,15 @@ namespace AspNetCoreDemo.Repository.Repository.Base
             _context.AddRange(Entity);
         }
 
+        public int AddRangeOverWrite(List<T> Entity)
+        {
+            BeginTran();
+            var list = _context.Set<T>().ToList();
+            _context.RemoveRange(list);
+            _context.AddRange(Entity);
+            return SaveChange();
+        }
+
         public Task<int> AddRangeOverWriteAsync(List<T> Entity, Expression<Func<T, bool>> delLambda)
         {
             BeginTran();

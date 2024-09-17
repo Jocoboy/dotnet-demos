@@ -41,5 +41,6 @@ The Repository-Service pattern relies on dependency injection to work properly. 
 - :white_check_mark: Add RouteConvention to configure global routing prefix.
 - :white_check_mark: Add CustomExceptionFilter to catch expected exceptions.
 - :white_check_mark: Add RemarkAttribute to bind error code with corresponding message.
+- :white_check_mark: Add ExcelHelper to import or export data from excel to database.
 - :white_check_mark: Add OprLog module to record user operation in database.
 - :white_check_mark: Add Login module for both front page and back page in two ways, including password login and sms login(use [IHuYi](https://www.ihuyi.com/) API for test).

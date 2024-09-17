@@ -25,7 +25,7 @@ namespace AspNetCoreDemo.Repository.Repository
            };
 
             string countsql = @"SELECT COUNT(s.Id) FROM student s";
-            string sql = @"SELECT Name, StudentLevel FROM student s";
+            string sql = @"SELECT Id, Name, StudentLevel FROM student s";
             string where = " WHERE 1 = 1";
 
             if (!string.IsNullOrEmpty(dto.Name))

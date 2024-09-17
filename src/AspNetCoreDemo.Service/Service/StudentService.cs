@@ -1,5 +1,7 @@
-﻿using AspNetCoreDemo.Model.Dtos;
+﻿using AspNetCoreDemo.Common;
+using AspNetCoreDemo.Model.Dtos;
 using AspNetCoreDemo.Model.EFCore.Entity;
+using AspNetCoreDemo.Model.Enums;
 using AspNetCoreDemo.Repository.IRepository;
 using AspNetCoreDemo.Repository.IRepository.Base;
 using AspNetCoreDemo.Service.IService;
@@ -18,6 +20,7 @@ namespace AspNetCoreDemo.Service.Service
 
         public StudentService(IStudentRepository student)
         {
+            _baseRepository = student;
             _student = student;
         }
 
@@ -26,6 +29,22 @@ namespace AspNetCoreDemo.Service.Service
             var list = _student.GetStudentData(out count, dto, isAll).ToList();
 
             return list;
+        }
+        
+        public MessageDto<string> ImportStudentData(List<Student> students, ImportType importType)
+        {
+            switch(importType)
+            {
+                case ImportType.Append:
+                    _student.AddRange(students);
+                    return ResultHelper<string>.GetResult(ErrorType.Success);
+                case ImportType.Overwrite:
+                    _student.AddRangeOverWrite(students);
+                    return ResultHelper<string>.GetResult(ErrorType.Success);
+                default:
+                    return ResultHelper<string>.GetResult(ErrorType.CodeError);
+            }
+
         }
     }
 }

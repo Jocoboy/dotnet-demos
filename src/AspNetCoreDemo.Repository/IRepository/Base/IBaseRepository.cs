@@ -69,6 +69,8 @@ namespace AspNetCoreDemo.Repository.IRepository.Base
 
         public void AddRangeNoSave(List<T> Entity);
 
+        int AddRangeOverWrite(List<T> Entity);
+
         public Task<int> AddRangeOverWriteAsync(List<T> Entity, Expression<Func<T, bool>> delLambda);
         #endregion
 

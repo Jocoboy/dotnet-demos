@@ -9,6 +9,7 @@ namespace AspNetCoreDemo.Common.AutoMappers
         public UserApiMappersProfile()
         {
             CreateMap<SysUser, CurrentUserDto>(MemberList.Source).ReverseMap();
+            CreateMap<Student, StudentDataDto>(MemberList.Source).ReverseMap();
         }
     }
 }

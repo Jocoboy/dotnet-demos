@@ -4,6 +4,14 @@
              xmlns:local="clr-namespace:WPFDemo.Webview2"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Order is important -->
+                <ResourceDictionary Source="Styles/Icons.xaml" />
+                <ResourceDictionary Source="Styles/StackPanels.xaml" />
+                <ResourceDictionary Source="Styles/Paths.xaml" />
+                <ResourceDictionary Source="Styles/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

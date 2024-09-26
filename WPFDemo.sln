@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDemo.Webview2", "WPFDemo.Webview2\WPFDemo.Webview2.csproj", "{E0616F4E-0B25-451B-A662-FE4660BB299F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDemo.Webview2", "src\WPFDemo.Webview2\WPFDemo.Webview2.csproj", "{E0616F4E-0B25-451B-A662-FE4660BB299F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

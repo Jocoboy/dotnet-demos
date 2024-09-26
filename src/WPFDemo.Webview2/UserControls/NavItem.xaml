@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="WPFDemo.Webview2.UserControls.NavItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFDemo.Webview2.UserControls"
+             mc:Ignorable="d" 
+             x:Name="Control" 
+             MinWidth="80"
+             MaxWidth="250"
+             BorderThickness="0"
+             Background="#f6e58d"
+             MouseLeftButtonDown="Click"
+             SnapsToDevicePixels="True"
+             d:DesignHeight="40" d:DesignWidth="200" d:Background="#f0932b" >
+    <Grid>
+        <DockPanel>
+            <Canvas DockPanel.Dock="Left" Width="2" Height="16" Background="#525D75" Margin="3,12" />
+            <Canvas Height="5" DockPanel.Dock="Top" />
+            <DockPanel Height="7" DockPanel.Dock="Bottom" Style="{StaticResource dp1}">
+                <Border Width="7" DockPanel.Dock="Left" CornerRadius="0,0,7,0" Background="#FF273E61"/>
+                <Border Width="7" DockPanel.Dock="Right" CornerRadius="0,0,0,7" Background="#FF273E61"/>
+                <Border/>
+            </DockPanel>
+            <DockPanel>
+                <Canvas Width="7" DockPanel.Dock="Left" />
+                <Canvas Width="7" DockPanel.Dock="Right" />
+                <Border Style="{StaticResource b1}"></Border>
+            </DockPanel>
+        </DockPanel>
+        <DockPanel Margin="23,0,15,0" VerticalAlignment="Center" >
+            <Border DockPanel.Dock="Right" Height="16" Width="16" Margin="4,0,0,0" CornerRadius="2" MouseLeftButtonDown="Close" Style="{StaticResource b2}">
+                <Canvas Height="8" Width="8">
+                    <Path Stroke="#f0932b" StrokeThickness="1">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="0,0">
+                                    <LineSegment Point="8,8" />
+                                </PathFigure>
+                                <PathFigure StartPoint="8,0">
+                                    <LineSegment Point="0,8" />
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+            </Border>
+            <TextBlock FontSize="14" Text="{Binding ElementName=Control,Path=Title}" Style="{StaticResource tb1}">
+            </TextBlock>
+        </DockPanel>
+    </Grid>
+</UserControl>

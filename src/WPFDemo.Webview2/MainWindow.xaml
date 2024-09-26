@@ -65,4 +65,8 @@
             </Border>
         </ControlTemplate>
     </Window.Template>
+
+    <Grid Margin="4,4,4,4">
+        <Grid x:Name="tabs"></Grid>
+    </Grid>
 </Window>

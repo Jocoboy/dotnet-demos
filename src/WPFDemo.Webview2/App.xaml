@@ -11,6 +11,9 @@
                 <ResourceDictionary Source="Styles/StackPanels.xaml" />
                 <ResourceDictionary Source="Styles/Paths.xaml" />
                 <ResourceDictionary Source="Styles/Buttons.xaml" />
+                <ResourceDictionary Source="Styles/DockPanels.xaml" />
+                <ResourceDictionary Source="Styles/Borders.xaml" />
+                <ResourceDictionary Source="Styles/TextBlocks.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

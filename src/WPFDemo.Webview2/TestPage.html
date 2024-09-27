@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>这是测试页面!</title>
+</head>
+<body>
+    <h3>欢迎来到测试页面!</h3>
+    <hr />
+    <div>
+        <label>消息：</label>
+        <button type="button" onclick="SendSubscribeMessage();">发送订阅消息</button>
+        <button type="button" onclick="SendTestMessage();">发送测试消息</button>
+        <label id="replyData"></label>
+        <label>测试消息：</label>
+    </div>
+    <ul id="messages"></ul>
+    <script type="text/javascript">
+        var messagesElement = document.getElementById("messages");
+
+        function SendSubscribeMessage() {
+            try {
+                var message = {
+                    "Id": "2BE370A5-17AA-4747-8674-9E0E5FC0DF98",
+                    "ServiceName": "Subscription",
+                    "DataType": "Subscribe",
+                    "Data": {
+                        "ServiceName": "TestService",
+                        "RoutingKeys": [
+                            "123"
+                        ]
+                    }
+                };
+                window.chrome.webview.postMessage(message);
+
+                var element = document.createElement('li');
+                element.innerText = '发送订阅消息!';
+                messagesElement.append(element);
+            } catch(ex)
+            {
+                alert(`消息发送失败：${ex}`);
+            }
+        }
+
+        function SendTestMessage() {
+            try {
+                var message = {
+                    "Id": "2BE370A5-17AA-4747-8674-9E0E5FC0DF98",
+                    "ServiceName": "TestService",
+                    "DataType": "TestData",
+                    "Data": {
+                        "TestName": "Hello"
+                    }
+                };
+                window.chrome.webview.postMessage(message);
+
+                var element = document.createElement('li');
+                element.innerText = '发送测试消息!';
+                messagesElement.append(element);
+            } catch (ex)
+            {
+                alert(`消息发送失败：${ex}`);
+            }
+        }
+
+        window.onload = function () {
+            window.chrome.webview.addEventListener('message', arg => {
+                var element = document.createElement('li');
+                element.innerText = `Host：${JSON.stringify(arg.data)}`;
+                messagesElement.append(element);
+                if (arg.data.ServiceName == "TestService") {
+                    document.getElementById("replyData").innerText = '【消息已接收】';
+                }
+            });
+        };
+
+    </script>
+</body>
+</html >

@@ -51,7 +51,7 @@ namespace WPFDemo.Webview2
             wv.CoreWebView2InitializationCompleted += CoreWebView2_InitializationCompleted;
             wv.EnsureCoreWebView2Async();
             wv.Source = new Uri(uri);
-            //TODO: bus register
+            App.MsgBus.RegisterWebView(wv);
             tabs.Children.Add(wv);
 
             var nav = new NavItem();
@@ -75,7 +75,7 @@ namespace WPFDemo.Webview2
             var selectedIndex = tabs.Children.IndexOf(selectedWv);
 
             var wv = tabs.Children[index] as WebView2;
-            //TODO: bus unregister
+            App.MsgBus.UnregisterWebView(wv);
 
             tabs.Children.RemoveAt(index);
             NavItems.Children.RemoveAt(index);
@@ -168,7 +168,7 @@ namespace WPFDemo.Webview2
                 if (i == index)
                 {
                     item.Visibility = Visibility.Visible;
-                    //TODO: bus active
+                    App.MsgBus.ActiveWebView(item);
                     RefreshToolbarButtonState(item.CoreWebView2);
                 }
                 else

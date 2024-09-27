@@ -20,8 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WPFDemo.MessageBus\WPFDemo.MessageBus.csproj" />
+    <ProjectReference Include="..\WPFDemo.MessageBus\WPFDemo.MessageBus.csproj" />
   </ItemGroup>
+
 
   <ItemGroup>
     <Resource Include="Images\face.png" />

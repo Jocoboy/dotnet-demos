@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFDemo.Webview2", "src\WPFDemo.Webview2\WPFDemo.Webview2.csproj", "{E0616F4E-0B25-451B-A662-FE4660BB299F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDemo.MessageBus", "WPFDemo.MessageBus\WPFDemo.MessageBus.csproj", "{D1271D8E-B278-4DAC-9916-EF8DAF3E2280}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDemo.MessageBus", "src\WPFDemo.MessageBus\WPFDemo.MessageBus.csproj", "{D1271D8E-B278-4DAC-9916-EF8DAF3E2280}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

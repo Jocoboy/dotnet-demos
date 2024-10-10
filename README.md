@@ -1,4 +1,4 @@
-![workflow on aspnetcoredemo branch](https://github.com/Jocoboy/dotnet-demos/actions/workflows/dotnet.yml/badge.svg?branch=aspnetcoredemo)
+![workflow on aspnetcoredemo branch](https://github.com/Jocoboy/dotnet-demos/actions/workflows/dotnet.yml/badge.svg?branch=aspnetcoredemo) 
 
 [:rewind:Back to Home](https://github.com/Jocoboy/dotnet-demos/tree/master)
 

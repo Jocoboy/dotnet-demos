@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFDemo.Webview2", "src\WPF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDemo.MessageBus", "src\WPFDemo.MessageBus\WPFDemo.MessageBus.csproj", "{D1271D8E-B278-4DAC-9916-EF8DAF3E2280}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFDemo.FileUpload", "src\WPFDemo.FileUpload\WPFDemo.FileUpload.csproj", "{F5BB31F7-C9E2-4CE4-B735-E19D30DA96B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D1271D8E-B278-4DAC-9916-EF8DAF3E2280}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1271D8E-B278-4DAC-9916-EF8DAF3E2280}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1271D8E-B278-4DAC-9916-EF8DAF3E2280}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5BB31F7-C9E2-4CE4-B735-E19D30DA96B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5BB31F7-C9E2-4CE4-B735-E19D30DA96B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5BB31F7-C9E2-4CE4-B735-E19D30DA96B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5BB31F7-C9E2-4CE4-B735-E19D30DA96B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

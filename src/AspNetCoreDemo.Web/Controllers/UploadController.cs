@@ -183,6 +183,14 @@ namespace AspNetCoreDemo.Web.Controllers
 
                 return Ok(new { Completed = false });
             }
+            catch(OperationCanceledException ex)
+            {
+                // 客户端主动取消上传，最后一个分片可能未完整上传，需要进行删除，否则客户端断点续传时，在对分片信息的更新过程中会发生错误
+                System.IO.File.Delete(Path.Combine(Path.Combine(_uploadPath, fileId), $"chunk_{chunkOffset}"));
+                var errorMsg = $"分片上传失败:{ex.Message}, 分片 chunk_{chunkOffset} 已删除！";
+                _logger.LogError(errorMsg);
+                return BadRequest(errorMsg);
+            }
             catch (Exception ex)
             {
                 var errorMsg = $"分片上传失败:{ex.Message}";

@@ -6,7 +6,9 @@ using AspNetCoreDemo.Model.EFCore;
 using AspNetCoreDemo.Repository.IRepository.Base;
 using AspNetCoreDemo.Repository.Repository.Base;
 using AspNetCoreDemo.Service.IService.Base;
+using AspNetCoreDemo.Service.Service.Background;
 using AspNetCoreDemo.Service.Service.Base;
+using AspNetCoreDemo.Web.BackgroundJobs;
 using AspNetCoreDemo.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +35,9 @@ builder.Services.AddControllers(options =>{
 
 builder.Services.AddDbContext<BaseContext>(options => options.UseMySQL(builder.Configuration.GetSection("ConnectionStrings")["MysqlConnection"]));
 
+// 注册配置类
+builder.Services.Configure<BackgroundJobOptions>(builder.Configuration.GetSection("BackgroundJobOptions"));
+
 // DI批量注入
 builder.Services.DIRegisterService();
 
@@ -48,6 +53,9 @@ builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 builder.Services.AddTransient<CustomExceptionFilterAttribute>();
 #endregion
+
+// 注册后台服务
+builder.Services.AddHostedService<UploadCleanupService>();
 
 // 添加AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

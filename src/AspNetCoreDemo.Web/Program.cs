@@ -66,6 +66,9 @@ builder.AddJWTExt();
 
 var app = builder.Build();
 
+// 启用静态文件服务
+app.UseStaticFiles(); 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

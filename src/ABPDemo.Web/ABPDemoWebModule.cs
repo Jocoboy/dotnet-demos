@@ -5,6 +5,7 @@ using ABPDemo.Web.Menus;
 using ABPDemo.Web.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Volo.Abp;
 using Volo.Abp.AspNetCore.Authentication.JwtBearer;
@@ -47,6 +49,8 @@ namespace ABPDemo.Web;
     )]
 public class ABPDemoWebModule : AbpModule
 {
+    private const string DefaultCorsPolicyName = "Default";
+
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         var hostingEnvironment = context.Services.GetHostingEnvironment();
@@ -62,6 +66,8 @@ public class ABPDemoWebModule : AbpModule
         ConfigureClockOptions();
         ConfigureExceptionHandlerOptions();
         ConfigureDataFilterOptions();
+        //ConfigureUnitOfWorkOptions();
+        //ConfigureCors(context);
     }
 
     private void ConfigureDataFilterOptions()
@@ -212,6 +218,29 @@ public class ABPDemoWebModule : AbpModule
                 #endregion
             }
         );
+    }
+
+    private void ConfigureCors(ServiceConfigurationContext context)
+    {
+        var configuration = context.Services.GetConfiguration();
+        context.Services.AddCors(options =>
+        {
+            options.AddPolicy(DefaultCorsPolicyName, builder =>
+            {
+                builder
+                    .WithOrigins(
+                        configuration["App:CorsOrigins"]
+                            .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                            .Select(o => o.RemovePostFix("/"))
+                            .ToArray()
+                    )
+                    .WithAbpExposedHeaders()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)

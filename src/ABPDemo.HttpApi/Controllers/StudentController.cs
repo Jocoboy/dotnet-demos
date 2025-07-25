@@ -1,6 +1,8 @@
-﻿using ABPDemo.StudentManagement;
+﻿using ABPDemo.Enums;
+using ABPDemo.StudentManagement;
 using ABPDemo.StudentManagement.Dtos;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -35,6 +37,16 @@ namespace ABPDemo.Controllers
         public async Task<StudentSimpleDto> UpdateStudentAsync(StudentInput input, CancellationToken cancellationToken)
         {
             return await _studentAppService.UpdateStudentAsync(input, cancellationToken);
+        }
+
+
+        /// <summary>
+        /// 更新学生年级
+        /// </summary>
+        [HttpPost("info/level")]
+        public async Task UpdateStudentLevelWithLockAsync(Guid id, StudentLevelType level, CancellationToken cancellationToken)
+        {
+            await _studentAppService.UpdateStudentLevelWithLockAsync(id, level, cancellationToken);
         }
     }
 }

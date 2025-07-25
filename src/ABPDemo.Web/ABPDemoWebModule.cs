@@ -3,6 +3,8 @@ using ABPDemo.Web.Filters;
 using ABPDemo.Web.Filters.StringTrim;
 using ABPDemo.Web.Menus;
 using ABPDemo.Web.Middlewares;
+using Medallion.Threading;
+using Medallion.Threading.Redis;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 using System;
 using System.Data;
 using System.IO;
@@ -27,6 +30,7 @@ using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Data;
+using Volo.Abp.DistributedLocking;
 using Volo.Abp.Identity.AspNetCore;
 using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
@@ -45,7 +49,8 @@ namespace ABPDemo.Web;
     typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpSwashbuckleModule),
-    typeof(AbpIdentityAspNetCoreModule)
+    typeof(AbpIdentityAspNetCoreModule),
+    typeof(AbpDistributedLockingModule)
     )]
 public class ABPDemoWebModule : AbpModule
 {
@@ -68,6 +73,7 @@ public class ABPDemoWebModule : AbpModule
         ConfigureDataFilterOptions();
         //ConfigureUnitOfWorkOptions();
         //ConfigureCors(context);
+        ConfigureRedis(context);
     }
 
     private void ConfigureDataFilterOptions()
@@ -240,6 +246,18 @@ public class ABPDemoWebModule : AbpModule
                     .AllowAnyMethod()
                     .AllowCredentials();
             });
+        });
+    }
+
+    private void ConfigureRedis(ServiceConfigurationContext context)
+    {
+        var configuration = context.Services.GetConfiguration();
+
+        context.Services.AddSingleton<IDistributedLockProvider>(sp =>
+        {
+            var connection = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
+
+            return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
         });
     }
 

@@ -1,4 +1,5 @@
-﻿using ABPDemo.StudentManagement.Dtos;
+﻿using ABPDemo.Enums;
+using ABPDemo.StudentManagement.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace ABPDemo.StudentManagement
         Task<PagedResultDto<StudentDto>> GetStudentListAsync(StudentFilterInput input, CancellationToken cancellationToken);
 
         Task<StudentSimpleDto> UpdateStudentAsync(StudentInput input, CancellationToken cancellationToken);
+
+        Task UpdateStudentLevelWithLockAsync(Guid id, StudentLevelType level, CancellationToken cancellationToken);
     }
 }

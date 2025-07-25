@@ -1,11 +1,14 @@
 ﻿using ABPDemo.AdvisoryLock;
+using ABPDemo.Enums;
 using ABPDemo.Permissions;
 using ABPDemo.StudentManagement.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.DistributedLocking;
 
 namespace ABPDemo.StudentManagement
 {
@@ -14,11 +17,13 @@ namespace ABPDemo.StudentManagement
 
         private readonly IStudentRepository _studentRepository;
         private readonly IAdvisoryLock _advisoryLock;
+        private readonly IAbpDistributedLock _abpDistributedLock;
 
-        public StudentAppService(IStudentRepository studentRepository, IAdvisoryLock advisoryLock)
+        public StudentAppService(IStudentRepository studentRepository, IAdvisoryLock advisoryLock, IAbpDistributedLock abpDistributedLock)
         {
             _studentRepository = studentRepository;
             _advisoryLock = advisoryLock;
+            _abpDistributedLock = abpDistributedLock;
         }
 
         public async Task<PagedResultDto<StudentDto>> GetStudentListAsync(StudentFilterInput input, CancellationToken cancellationToken)
@@ -47,6 +52,22 @@ namespace ABPDemo.StudentManagement
             await _studentRepository.UpdateAsync(student, false, cancellationToken);
 
             return ObjectMapper.Map<Student, StudentSimpleDto>(student);
+        }
+
+        [Authorize(Roles = ABPDemoRoles.Admin)]
+        public async Task UpdateStudentLevelWithLockAsync(Guid id, StudentLevelType level, CancellationToken cancellationToken)
+        {
+            // 定义锁的名称
+            var lockName = $"Student:{id}:UpdateLock";
+            // 尝试获取锁
+            await using var handle = await _abpDistributedLock.TryAcquireAsync(lockName, TimeSpan.Zero, cancellationToken);
+            if (handle != null)
+            {
+                // 临界区代码
+                var student = await _studentRepository.GetAsync(id, false, cancellationToken);
+                student.StudentLevel = level;
+                await _studentRepository.UpdateAsync(student, true, cancellationToken);
+            }
         }
     }
 }

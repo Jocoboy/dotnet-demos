@@ -29,6 +29,7 @@ using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.AutoMapper;
+using Volo.Abp.Caching;
 using Volo.Abp.Data;
 using Volo.Abp.DistributedLocking;
 using Volo.Abp.Identity.AspNetCore;
@@ -253,12 +254,26 @@ public class ABPDemoWebModule : AbpModule
     {
         var configuration = context.Services.GetConfiguration();
 
+        // 配置Redis分布式锁
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
             var connection = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
 
             return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
         });
+
+        Configure<AbpDistributedCacheOptions>(options =>
+        {
+            options.KeyPrefix = "ABPDemo:"; // 可选：设置缓存键前缀
+        });
+
+        // 配置Redis分布式缓存
+        context.Services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration["Redis:Configuration"];
+        });
+
+        context.Services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]));
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)

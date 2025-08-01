@@ -18,5 +18,7 @@ namespace ABPDemo.StudentManagement
         Task<StudentSimpleDto> UpdateStudentAsync(StudentInput input, CancellationToken cancellationToken);
 
         Task UpdateStudentLevelWithLockAsync(Guid id, StudentLevelType level, CancellationToken cancellationToken);
+
+        Task<StudentCacheItem> GetStudentFromCacheAsync(Guid id, CancellationToken cancellationToken);
     }
 }

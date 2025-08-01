@@ -41,12 +41,21 @@ namespace ABPDemo.Controllers
 
 
         /// <summary>
-        /// 更新学生年级
+        /// 更新学生年级(使用Redis分布式锁)
         /// </summary>
         [HttpPost("info/level")]
         public async Task UpdateStudentLevelWithLockAsync(Guid id, StudentLevelType level, CancellationToken cancellationToken)
         {
             await _studentAppService.UpdateStudentLevelWithLockAsync(id, level, cancellationToken);
+        }
+
+        /// <summary>
+        /// 获取学生信息(使用Redis分布式缓存)
+        /// </summary>
+        [HttpGet("info")]
+        public async Task<StudentCacheItem> GetStudentFromCacheAsync(Guid id, CancellationToken cancellationToken)
+        {
+           return  await _studentAppService.GetStudentFromCacheAsync(id, cancellationToken);
         }
     }
 }

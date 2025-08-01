@@ -40,5 +40,14 @@ namespace ABPDemo.Controllers
         {
             await  _systemManagementAppService.UpdateSystemSettingsAsync(input);
         }
+
+        /// <summary>
+        /// 清除Redis缓存
+        /// </summary>
+        [HttpDelete("cache")]
+        public async Task ClearRedisCacheAsync(string keyPrefix)
+        {
+            await _systemManagementAppService.ClearRedisCacheAsync(keyPrefix);
+        }
     }
 }

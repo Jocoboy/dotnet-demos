@@ -27,5 +27,6 @@ public class ABPDemoApplicationAutoMapperProfile : Profile
         CreateMap<Student, StudentDto>()
             .ForMember(d => d.Courses, p => p.MapFrom(s => s.StudentCourses.Select(x => x.Course)));
         CreateMap<Student, StudentSimpleDto>();
+        CreateMap<Student, StudentCacheItem>();
     }
 }

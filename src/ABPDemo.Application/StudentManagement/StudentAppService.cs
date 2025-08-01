@@ -3,11 +3,13 @@ using ABPDemo.Enums;
 using ABPDemo.Permissions;
 using ABPDemo.StudentManagement.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Caching;
 using Volo.Abp.DistributedLocking;
 
 namespace ABPDemo.StudentManagement
@@ -18,12 +20,14 @@ namespace ABPDemo.StudentManagement
         private readonly IStudentRepository _studentRepository;
         private readonly IAdvisoryLock _advisoryLock;
         private readonly IAbpDistributedLock _abpDistributedLock;
+        private readonly IDistributedCache<StudentCacheItem> _distributeCache;
 
-        public StudentAppService(IStudentRepository studentRepository, IAdvisoryLock advisoryLock, IAbpDistributedLock abpDistributedLock)
+        public StudentAppService(IStudentRepository studentRepository, IAdvisoryLock advisoryLock, IAbpDistributedLock abpDistributedLock, IDistributedCache<StudentCacheItem> distributedCache)
         {
             _studentRepository = studentRepository;
             _advisoryLock = advisoryLock;
             _abpDistributedLock = abpDistributedLock;
+            _distributeCache = distributedCache;
         }
 
         public async Task<PagedResultDto<StudentDto>> GetStudentListAsync(StudentFilterInput input, CancellationToken cancellationToken)
@@ -68,6 +72,26 @@ namespace ABPDemo.StudentManagement
                 student.StudentLevel = level;
                 await _studentRepository.UpdateAsync(student, true, cancellationToken);
             }
+        }
+
+        [Authorize(Roles = ABPDemoRoles.Admin)]
+        public async Task<StudentCacheItem> GetStudentFromCacheAsync(Guid id, CancellationToken cancellationToken)
+        {
+            var key = $"Student:{id}"; // 缓存Key
+            return await _distributeCache.GetOrAddAsync(
+                key, 
+                async () =>  // 如果缓存不存在，从数据库加载
+                {
+                    var student = await _studentRepository.GetAsync(id, false, cancellationToken);
+                    var studentCacheItem = ObjectMapper.Map<Student, StudentCacheItem> (student);
+                    return studentCacheItem;
+                },
+                () => new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) // 1小时后过期
+                },
+                null, false, cancellationToken
+            );
         }
     }
 }

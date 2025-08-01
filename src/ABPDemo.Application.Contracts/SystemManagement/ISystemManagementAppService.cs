@@ -14,5 +14,7 @@ namespace ABPDemo.SystemManagement
         Task<PagedResultDto<OperationLogDto>> GetOperateLogListAsync(OperationLogFliterInput input, CancellationToken cancellationToken);
 
         Task UpdateSystemSettingsAsync(SystemSettingInput input);
+
+        Task ClearRedisCacheAsync(string keyPrefix);
     }
 }

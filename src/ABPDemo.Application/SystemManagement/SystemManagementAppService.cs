@@ -1,4 +1,5 @@
 ﻿using ABPDemo.Permissions;
+using ABPDemo.RedisCache;
 using ABPDemo.Settings;
 using ABPDemo.SystemManagement.Dtos;
 using Microsoft.AspNetCore.Authorization;
@@ -14,11 +15,13 @@ namespace ABPDemo.SystemManagement
     {
         private readonly IOperationLogRepository _operateLogRepo;
         private readonly ISettingManager _settingManager;
+        private readonly RedisCacheManager _redisCacheManager;
 
-        public SystemManagementAppService(IOperationLogRepository operateLogRepo, ISettingManager settingManager)
+        public SystemManagementAppService(IOperationLogRepository operateLogRepo, ISettingManager settingManager, RedisCacheManager redisCacheManager)
         {
             _operateLogRepo = operateLogRepo;
             _settingManager = settingManager;
+            _redisCacheManager = redisCacheManager;
         }
 
         public async Task<PagedResultDto<OperationLogDto>> GetOperateLogListAsync(OperationLogFliterInput input, CancellationToken cancellationToken)
@@ -38,6 +41,11 @@ namespace ABPDemo.SystemManagement
         public async Task UpdateSystemSettingsAsync(SystemSettingInput input)
         {
             await _settingManager.SetGlobalAsync(ABPDemoSettings.ResetPassword, input.ResetPassword);
+        }
+
+        public async Task ClearRedisCacheAsync(string keyPrefix)
+        {
+            await _redisCacheManager.ClearByPrefixAsync(keyPrefix);
         }
     }
 }
